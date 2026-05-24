@@ -9,7 +9,7 @@ namespace voxyl::graphics {
 
     class Descriptor {
     public:
-        Descriptor(const Context& context);
+        explicit Descriptor(const Context& context);
         ~Descriptor();
 
         Descriptor(const Descriptor&) = delete;
@@ -17,7 +17,7 @@ namespace voxyl::graphics {
 
         void layout(VkShaderStageFlags stages, VkDescriptorType type);
         void build();
-        void bind(uint32_t binding, VkSampler sampler, VkImageView view);
+        void bind(uint32_t binding, const VkSampler* sampler, const VkImageView* view) const;
         void update();
 
         [[nodiscard]] VkDescriptorSetLayout architecture() const { return structural; }

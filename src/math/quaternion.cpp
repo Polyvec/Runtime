@@ -1,206 +1,176 @@
 #include "../include/math/quaternion.hpp"
 #include <cassert>
+#include <numbers>
 
-const Quaternion Quaternion::IDENTITY = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+namespace voxyl::math {
 
-Quaternion::Quaternion() : x(0.0f), y(0.0f), z(0.0f), w(1.0f) {}
+    const Quaternion Quaternion::IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
 
-Quaternion::Quaternion(const float x, const float y, const float z, const float w)
-    : x(x), y(y), z(z), w(w) {}
+    Quaternion::Quaternion() : x(0.0f), y(0.0f), z(0.0f), w(1.0f) {}
+    Quaternion::Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
-Quaternion Quaternion::operator+(const Quaternion &quaternion) const {
-    return {x + quaternion.x, y + quaternion.y, z + quaternion.z, w + quaternion.w};
-}
-
-Quaternion Quaternion::operator-(const Quaternion &quaternion) const {
-    return {x - quaternion.x, y - quaternion.y, z - quaternion.z, w - quaternion.w};
-}
-
-Quaternion Quaternion::operator*(const Quaternion &quaternion) const {
-    return {
-        w * quaternion.x + x * quaternion.w + y * quaternion.z - z * quaternion.y,
-        w * quaternion.y - x * quaternion.z + y * quaternion.w + z * quaternion.x,
-        w * quaternion.z + x * quaternion.y - y * quaternion.x + z * quaternion.w,
-        w * quaternion.w - x * quaternion.x - y * quaternion.y - z * quaternion.z
-    };
-}
-
-Quaternion Quaternion::operator*(const float scalar) const {
-    return {x * scalar, y * scalar, z * scalar, w * scalar};
-}
-
-Quaternion &Quaternion::operator+=(const Quaternion &quaternion) {
-    x += quaternion.x; y += quaternion.y; z += quaternion.z; w += quaternion.w;
-    return *this;
-}
-
-Quaternion &Quaternion::operator-=(const Quaternion &quaternion) {
-    x -= quaternion.x; y -= quaternion.y; z -= quaternion.z; w -= quaternion.w;
-    return *this;
-}
-
-Quaternion &Quaternion::operator*=(const Quaternion &quaternion) {
-    *this = *this * quaternion;
-    return *this;
-}
-
-Quaternion &Quaternion::operator*=(const float scalar) {
-    x *= scalar; y *= scalar; z *= scalar; w *= scalar;
-    return *this;
-}
-
-bool Quaternion::operator==(const Quaternion &quaternion) const {
-    return x == quaternion.x && y == quaternion.y && z == quaternion.z && w == quaternion.w;
-}
-
-bool Quaternion::operator!=(const Quaternion &quaternion) const {
-    return !(*this == quaternion);
-}
-
-Vector3 Quaternion::operator*(const Vector3 &vector) const {
-    const Vector3 imaginary(x, y, z);
-    const Vector3 cross1 = imaginary.cross(vector);
-    const Vector3 cross2 = imaginary.cross(cross1);
-    return vector + ((cross1 * w) + cross2) * 2.0f;
-}
-
-Scalar Quaternion::length() const {
-    return Scalar(sqrtf(x * x + y * y + z * z + w * w));
-}
-
-Scalar Quaternion::dot(const Quaternion &quaternion) const {
-    return Scalar(x * quaternion.x + y * quaternion.y + z * quaternion.z + w * quaternion.w);
-}
-
-Quaternion Quaternion::normalized() const {
-    const float magnitude = static_cast<float>(length());
-    assert(magnitude != 0.0f && "Quaternion: cannot normalize zero-length quaternion");
-    return *this * (1.0f / magnitude);
-}
-
-Quaternion Quaternion::conjugate() const {
-    return {-x, -y, -z, w};
-}
-
-Quaternion Quaternion::inverse() const {
-    const float squared = x * x + y * y + z * z + w * w;
-    assert(squared != 0.0f && "Quaternion: cannot invert zero-length quaternion");
-    return conjugate() * (1.0f / squared);
-}
-
-Quaternion Quaternion::interpolate(const Quaternion &quaternion, float factor) const {
-    factor = fmaxf(0.0f, fminf(factor, 1.0f));
-
-    float cosine = static_cast<float>(dot(quaternion));
-
-    Quaternion target = quaternion;
-    if (cosine < 0.0f) {
-        target = Quaternion(-quaternion.x, -quaternion.y, -quaternion.z, -quaternion.w);
-        cosine = -cosine;
+    Quaternion Quaternion::operator+(const Quaternion &quaternion) const {
+        return Quaternion(x + quaternion.x, y + quaternion.y, z + quaternion.z, w + quaternion.w);
     }
-
-    if (cosine > 0.9995f) {
+    Quaternion Quaternion::operator-(const Quaternion &quaternion) const {
+        return Quaternion(x - quaternion.x, y - quaternion.y, z - quaternion.z, w - quaternion.w);
+    }
+    Quaternion Quaternion::operator*(const Quaternion &quaternion) const {
         return Quaternion(
-            x + factor * (target.x - x),
-            y + factor * (target.y - y),
-            z + factor * (target.z - z),
-            w + factor * (target.w - w)
-        ).normalized();
+            w * quaternion.x + x * quaternion.w + y * quaternion.z - z * quaternion.y,
+            w * quaternion.y - x * quaternion.z + y * quaternion.w + z * quaternion.x,
+            w * quaternion.z + x * quaternion.y - y * quaternion.x + z * quaternion.w,
+            w * quaternion.w - x * quaternion.x - y * quaternion.y - z * quaternion.z
+        );
+    }
+    Quaternion Quaternion::operator*(float scalar) const {
+        return Quaternion(x * scalar, y * scalar, z * scalar, w * scalar);
     }
 
-    const float theta = acosf(cosine);
-    const float sine = sinf(theta);
-    const float alpha = sinf((1.0f - factor) * theta) / sine;
-    const float beta = sinf(factor * theta) / sine;
-
-    return {
-        alpha * x + beta * target.x,
-        alpha * y + beta * target.y,
-        alpha * z + beta * target.z,
-        alpha * w + beta * target.w
-    };
-}
-
-bool Quaternion::approximately(const Quaternion &quaternion, const float epsilon) const {
-    return fabsf(x - quaternion.x) <= epsilon &&
-           fabsf(y - quaternion.y) <= epsilon &&
-           fabsf(z - quaternion.z) <= epsilon &&
-           fabsf(w - quaternion.w) <= epsilon;
-}
-
-Vector3 Quaternion::euler() const {
-    const float roll = atan2f(
-        2.0f * (w * x + y * z),
-        1.0f - 2.0f * (x * x + y * y)
-    );
-
-    const float pitch = fabsf(2.0f * (w * y - z * x)) >= 1.0f
-                        ? copysignf(std::numbers::pi_v<float> / 2.0f, 2.0f * (w * y - z * x))
-                        : asinf(2.0f * (w * y - z * x));
-
-    const float yaw = atan2f(
-        2.0f * (w * z + x * y),
-        1.0f - 2.0f * (y * y + z * z)
-    );
-
-    constexpr float degrees = 180.0f / std::numbers::pi_v<float>;
-    return {roll * degrees, pitch * degrees, yaw * degrees};
-}
-
-Quaternion Quaternion::euler(const Vector3 &degrees) {
-    constexpr float radians = std::numbers::pi_v<float> / 180.0f;
-    const float roll  = degrees.x * radians * 0.5f;
-    const float pitch = degrees.y * radians * 0.5f;
-    const float yaw   = degrees.z * radians * 0.5f;
-
-    return {
-        sinf(roll) * cosf(pitch) * cosf(yaw) - cosf(roll) * sinf(pitch) * sinf(yaw),
-        cosf(roll) * sinf(pitch) * cosf(yaw) + sinf(roll) * cosf(pitch) * sinf(yaw),
-        cosf(roll) * cosf(pitch) * sinf(yaw) - sinf(roll) * sinf(pitch) * cosf(yaw),
-        cosf(roll) * cosf(pitch) * cosf(yaw) + sinf(roll) * sinf(pitch) * sinf(yaw)
-    };
-}
-
-Quaternion Quaternion::between(const Vector3 &from, const Vector3 &to) {
-    assert(static_cast<float>(from.length()) > 0.0f && "Quaternion::between: from vector must be non-zero");
-    assert(static_cast<float>(to.length()) > 0.0f && "Quaternion::between: to vector must be non-zero");
-
-    const Vector3 origin = from.normalized();
-    const Vector3 destination = to.normalized();
-    const float cosine = static_cast<float>(origin.dot(destination));
-
-    if (cosine < -0.9999f) {
-        Vector3 perpendicular = Vector3(1.0f, 0.0f, 0.0f).cross(origin);
-        if (static_cast<float>(perpendicular.length()) < 0.001f)
-            perpendicular = Vector3(0.0f, 1.0f, 0.0f).cross(origin);
-        return around(180.0f, perpendicular.normalized());
+    Quaternion &Quaternion::operator+=(const Quaternion &quaternion) {
+        x += quaternion.x; y += quaternion.y; z += quaternion.z; w += quaternion.w; return *this;
+    }
+    Quaternion &Quaternion::operator-=(const Quaternion &quaternion) {
+        x -= quaternion.x; y -= quaternion.y; z -= quaternion.z; w -= quaternion.w; return *this;
+    }
+    Quaternion &Quaternion::operator*=(const Quaternion &quaternion) {
+        *this = *this * quaternion; return *this;
+    }
+    Quaternion &Quaternion::operator*=(float scalar) {
+        x *= scalar; y *= scalar; z *= scalar; w *= scalar; return *this;
     }
 
-    const Vector3 axis = origin.cross(destination);
-    return Quaternion(axis.x, axis.y, axis.z, 1.0f + cosine).normalized();
-}
+    bool Quaternion::operator==(const Quaternion &quaternion) const {
+        return x == quaternion.x && y == quaternion.y && z == quaternion.z && w == quaternion.w;
+    }
+    bool Quaternion::operator!=(const Quaternion &quaternion) const {
+        return !(*this == quaternion);
+    }
 
-Quaternion Quaternion::look(const Vector3 &forward, const Vector3 &up) {
-    assert(static_cast<float>(forward.length()) > 0.0f && "Quaternion::look: forward vector must be non-zero");
-    assert(static_cast<float>(up.length()) > 0.0f && "Quaternion::look: up vector must be non-zero");
-    return between(Vector3::FORWARD, forward.normalized());
-}
+    Vector3 Quaternion::operator*(const Vector3 &vector) const {
+        Vector3 qv(x, y, z);
+        Vector3 uv = qv.cross(vector);
+        Vector3 uuv = qv.cross(uv);
+        return vector + ((uv * w) + uuv) * 2.0f;
+    }
 
-Quaternion Quaternion::around(const float angle, const Vector3 &axis) {
-    assert(static_cast<float>(axis.length()) > 0.0f && "Quaternion::around: axis must be non-zero");
-    constexpr float radians = std::numbers::pi_v<float> / 180.0f;
-    const float half = angle * radians * 0.5f;
-    const Vector3 norm = axis.normalized();
+    Scalar Quaternion::length() const {
+        return Scalar(std::sqrt(x * x + y * y + z * z + w * w));
+    }
+    Scalar Quaternion::dot(const Quaternion &quaternion) const {
+        return Scalar(x * quaternion.x + y * quaternion.y + z * quaternion.z + w * quaternion.w);
+    }
 
-    return {
-        norm.x * sinf(half),
-        norm.y * sinf(half),
-        norm.z * sinf(half),
-        cosf(half)
-    };
-}
+    Quaternion Quaternion::normalized() const {
+        float len = std::sqrt(x * x + y * y + z * z + w * w);
+        assert(len > 0.0f);
+        return Quaternion(x / len, y / len, z / len, w / len);
+    }
+    Quaternion Quaternion::conjugate() const {
+        return Quaternion(-x, -y, -z, w);
+    }
+    Quaternion Quaternion::inverse() const {
+        float norm = x * x + y * y + z * z + w * w;
+        assert(norm > 0.0f);
+        return Quaternion(-x / norm, -y / norm, -z / norm, w / norm);
+    }
+    Quaternion Quaternion::interpolate(const Quaternion &quaternion, float factor) const {
+        float cosTheta = x * quaternion.x + y * quaternion.y + z * quaternion.z + w * quaternion.w;
+        Quaternion target = quaternion;
+        if (cosTheta < 0.0f) {
+            cosTheta = -cosTheta;
+            target = Quaternion(-quaternion.x, -quaternion.y, -quaternion.z, -quaternion.w);
+        }
+        if (cosTheta > 0.9995f) {
+            return Quaternion(
+                x + (target.x - x) * factor,
+                y + (target.y - y) * factor,
+                z + (target.z - z) * factor,
+                w + (target.w - w) * factor
+            ).normalized();
+        }
+        float theta = std::acos(cosTheta);
+        float sinTheta = std::sin(theta);
+        float af = std::sin((1.0f - factor) * theta) / sinTheta;
+        float bf = std::sin(factor * theta) / sinTheta;
+        return Quaternion(
+            x * af + target.x * bf,
+            y * af + target.y * bf,
+            z * af + target.z * bf,
+            w * af + target.w * bf
+        );
+    }
 
-std::ostream &operator<<(std::ostream &os, const Quaternion &quaternion) {
-    os << "Quaternion(" << quaternion.x << ", " << quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")";
-    return os;
+    bool Quaternion::approximately(const Quaternion &quaternion, float epsilon) const {
+        return std::fabs(x - quaternion.x) <= epsilon &&
+               std::fabs(y - quaternion.y) <= epsilon &&
+               std::fabs(z - quaternion.z) <= epsilon &&
+               std::fabs(w - quaternion.w) <= epsilon;
+    }
+
+    Vector3 Quaternion::euler() const {
+        Vector3 angles;
+        float sinr_cosp = 2.0f * (w * x + y * z);
+        float cosr_cosp = 1.0f - 2.0f * (x * x + y * y);
+        angles.x = std::atan2(sinr_cosp, cosr_cosp);
+
+        float sinp = 2.0f * (w * y - z * x);
+        if (std::fabs(sinp) >= 1.0f)
+            angles.y = std::copysign(std::numbers::pi_v<float> / 2.0f, sinp);
+        else
+            angles.y = std::asin(sinp);
+
+        float siny_cosp = 2.0f * (w * z + x * y);
+        float cosy_cosp = 1.0f - 2.0f * (y * y + z * z);
+        angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+        return angles * (180.0f / std::numbers::pi_v<float>);
+    }
+
+    Quaternion Quaternion::euler(const Vector3 &degrees) {
+        Vector3 rad = degrees * (std::numbers::pi_v<float> / 180.0f);
+        float cx = std::cos(rad.x * 0.5f);
+        float sx = std::sin(rad.x * 0.5f);
+        float cy = std::cos(rad.y * 0.5f);
+        float sy = std::sin(rad.y * 0.5f);
+        float cz = std::cos(rad.z * 0.5f);
+        float sz = std::sin(rad.z * 0.5f);
+
+        return Quaternion(
+            sx * cy * cz - cx * sy * sz,
+            cx * sy * cz + sx * cy * sz,
+            cx * cy * sz - sx * sy * cz,
+            cx * cy * cz + sx * sy * sz
+        );
+    }
+
+    Quaternion Quaternion::between(const Vector3 &from, const Vector3 &to) {
+        float cosine = from.dot(to);
+        if (cosine < -0.9999f) {
+            Vector3 perpendicular = Vector3(1.0f, 0.0f, 0.0f).cross(from);
+            if (perpendicular.length() < 0.001f)
+                perpendicular = Vector3(0.0f, 1.0f, 0.0f).cross(from);
+            return around(180.0f, perpendicular.normalized());
+        }
+        Vector3 axis = from.cross(to);
+        return Quaternion(axis.x, axis.y, axis.z, 1.0f + cosine).normalized();
+    }
+
+    Quaternion Quaternion::look(const Vector3 &forward, const Vector3 &up) {
+        assert(forward.length() > 0.0f);
+        assert(up.length() > 0.0f);
+        return between(Vector3::FORWARD, forward.normalized());
+    }
+
+    Quaternion Quaternion::around(float angle, const Vector3 &axis) {
+        assert(axis.length() > 0.0f);
+        float radians = angle * (std::numbers::pi_v<float> / 180.0f);
+        float sinHalf = std::sin(radians * 0.5f);
+        Vector3 normAxis = axis.normalized();
+        return Quaternion(normAxis.x * sinHalf, normAxis.y * sinHalf, normAxis.z * sinHalf, std::cos(radians * 0.5f));
+    }
+
+    std::ostream &operator<<(std::ostream &os, const Quaternion &quaternion) {
+        return os << "Quaternion(" << quaternion.x << ", " << quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")";
+    }
 }

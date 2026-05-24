@@ -1,4 +1,4 @@
-#include "../include/graphics/texture.hpp"
+#include "texture.hpp"
 #include "../include/graphics/context.hpp"
 #include <stdexcept>
 

@@ -2,14 +2,14 @@
 
 #include "buffer.hpp"
 #include "vertex.hpp"
-#include <vector>
 #include <memory>
+#include <span>
 
 namespace voxyl::graphics {
 
     class Mesh {
     public:
-        Mesh(const Context& context, const std::vector<Vertex>& points);
+        Mesh(const Context& context, std::span<const Vertex> points);
 
         [[nodiscard]] const Buffer& source() const { return *vertices; }
         [[nodiscard]] uint32_t count() const { return total; }

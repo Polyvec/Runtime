@@ -25,6 +25,9 @@ endif()
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
     execute_process(COMMAND git clone --branch v4.3-stable https://github.com/warmcat/libwebsockets.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
 endif()
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge")
+    execute_process(COMMAND git clone https://github.com/kunitoki/LuaBridge3.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge")
+endif()
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/include/luajit-2.1")
 
@@ -90,7 +93,7 @@ add_library(liblua STATIC IMPORTED GLOBAL)
 if(WIN32)
     set_target_properties(liblua PROPERTIES
             IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/lib/lua51.lib"
-            INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/include/luajit-2.1"
+            INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/src"
     )
 else()
     set_target_properties(liblua PROPERTIES
@@ -121,6 +124,9 @@ set_target_properties(liblws PROPERTIES
 )
 add_dependencies(liblws lws)
 
+add_library(bridge INTERFACE)
+target_include_directories(bridge INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge/Source")
+
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -145,7 +151,7 @@ target_include_directories(volyx PUBLIC
 )
 
 if(WIN32)
-    target_link_libraries(volyx PUBLIC liblua libuv libenet liblws Vulkan::Vulkan ws2_32 iphlpapi userenv winmm)
+    target_link_libraries(volyx PUBLIC bridge liblua libuv libenet liblws Vulkan::Vulkan ws2_32 iphlpapi userenv winmm)
 else()
-    target_link_libraries(volyx PUBLIC liblua libuv libenet liblws Vulkan::Vulkan m dl pthread)
+    target_link_libraries(volyx PUBLIC bridge liblua libuv libenet liblws Vulkan::Vulkan m dl pthread)
 endif()

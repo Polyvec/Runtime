@@ -2,12 +2,11 @@
 
 #include <vulkan/vulkan.h>
 #include <vector>
-
-struct Vector2;
-struct Vector3;
-struct Vector4;
-struct Matrix4;
-struct Transform;
+#include "../include/math/vector2.hpp"
+#include "../include/math/vector3.hpp"
+#include "../include/math/matrix4.hpp"
+#include "../include/math/quaternion.hpp"
+#include "../include/math/transform.hpp"
 
 namespace voxyl::graphics {
 
@@ -17,31 +16,31 @@ namespace voxyl::graphics {
 
     struct Camera {
         bool flat;
-        float angle;
+        math::Vector3 position;
+        math::Quaternion rotation;
+        float fov;
+        float aspect;
     };
 
     struct Model {
         const Texture* texture;
+        math::Transform transform;
     };
 
     struct Sprite {
         const Texture* texture;
-        float x;
-        float y;
-        float width;
-        float height;
+        math::Vector2 position;
+        math::Vector2 size;
+        float rotation;
     };
 
     class Context {
     public:
-        Context(int width, int height, const char* title);
+        Context(int width, int height);
         ~Context();
 
         Context(const Context&) = delete;
         Context& operator=(const Context&) = delete;
-
-        [[nodiscard]] bool active() const;
-        void poll();
 
         void begin();
         void end();
@@ -54,34 +53,30 @@ namespace voxyl::graphics {
         [[nodiscard]] VkPhysicalDevice hardware() const { return silicon; }
 
     private:
-        void boot(const char* title);
+        void init(int width, int height);
         void link();
         void clean() const;
 
-        void* window;
-
         VkInstance instance;
-        VkSurfaceKHR surface;
         VkPhysicalDevice silicon;
         VkDevice core;
         VkQueue graphics;
-        VkQueue present;
 
-        VkSwapchainKHR swapchain;
         std::vector<VkImage> images;
+        std::vector<VkDeviceMemory> memories;
         std::vector<VkImageView> views;
         VkFormat format;
         VkExtent2D extent;
 
         VkCommandPool pool;
         std::vector<VkCommandBuffer> buffers;
-        std::vector<VkSemaphore> available;
-        std::vector<VkSemaphore> finished;
         std::vector<VkFence> fences;
 
-        uint32_t tick;
+        int tick;
         uint32_t index;
         bool resized;
+
+        math::Matrix4 matrix;
     };
 
 }

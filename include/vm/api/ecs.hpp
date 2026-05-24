@@ -1,13 +1,5 @@
 #pragma once
-#ifdef __cplusplus
-#include <lua.hpp>
-extern "C" {
-#else
-#include <lua.h>
-#endif
 
-int luaopen_ecs(lua_State *L);
+struct lua_State;
 
-#ifdef __cplusplus
-}
-#endif
+void register_ecs_bindings(lua_State* state);

@@ -1,5 +1,4 @@
 #include "../include/graphics/vertex.hpp"
-#include <cstddef>
 
 namespace voxyl::graphics {
 
@@ -13,24 +12,24 @@ namespace voxyl::graphics {
 
     std::vector<VkVertexInputAttributeDescription> Vertex::attributes() {
         return {
-                {
-                    .location = 0,
-                    .binding = 0,
-                    .format = VK_FORMAT_R32G32B32_SFLOAT,
-                    .offset = offsetof(Vertex, x),
-                },
-                {
-                    .location = 1,
-                    .binding = 0,
-                    .format = VK_FORMAT_R32G32B32_SFLOAT,
-                    .offset = offsetof(Vertex, r),
-                },
-                {
-                    .location = 2,
-                    .binding = 0,
-                    .format = VK_FORMAT_R32G32_SFLOAT,
-                    .offset = offsetof(Vertex, u),
-                }
+                    {
+                        .location = 0,
+                        .binding = 0,
+                        .format = VK_FORMAT_R32G32B32_SFLOAT,
+                        .offset = 0,
+                    },
+                    {
+                        .location = 1,
+                        .binding = 0,
+                        .format = VK_FORMAT_R32G32B32_SFLOAT,
+                        .offset = static_cast<uint32_t>(sizeof(math::Vector3)),
+                    },
+                    {
+                        .location = 2,
+                        .binding = 0,
+                        .format = VK_FORMAT_R32G32_SFLOAT,
+                        .offset = static_cast<uint32_t>(sizeof(math::Vector3) + sizeof(math::Vector3)),
+                    }
         };
     }
 

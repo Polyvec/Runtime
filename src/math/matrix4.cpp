@@ -1,295 +1,256 @@
 #include "../include/math/matrix4.hpp"
 #include <cassert>
 
-const Matrix4 Matrix4::IDENTITY = Matrix4(1.0f);
+namespace voxyl::math {
 
-float Matrix4::operator()(const int row, const int column) const {
-    assert(row >= 0 && row < 4 && "Matrix4: row index out of bounds");
-    assert(column >= 0 && column < 4 && "Matrix4: column index out of bounds");
-    return this->matrix[row][column];
-}
+    const Matrix4 Matrix4::IDENTITY = Matrix4(1.0f);
 
-float &Matrix4::operator()(const int row, const int column) {
-    assert(row >= 0 && row < 4 && "Matrix4: row index out of bounds");
-    assert(column >= 0 && column < 4 && "Matrix4: column index out of bounds");
-    return this->matrix[row][column];
-}
-
-Matrix4 Matrix4::operator+(const Matrix4 &other) const {
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            result.matrix[row][column] = this->matrix[row][column] + other.matrix[row][column];
-    return result;
-}
-
-Matrix4 Matrix4::operator-(const Matrix4 &other) const {
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            result.matrix[row][column] = this->matrix[row][column] - other.matrix[row][column];
-    return result;
-}
-
-Matrix4 Matrix4::operator*(const Matrix4 &other) const {
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            for (int k = 0; k < 4; k++)
-                result.matrix[row][column] += this->matrix[row][k] * other.matrix[k][column];
-    return result;
-}
-
-Matrix4 Matrix4::operator*(const float scalar) const {
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            result.matrix[row][column] = this->matrix[row][column] * scalar;
-    return result;
-}
-
-Vector3 Matrix4::operator*(const Vector3 &vector) const {
-    const float x = this->matrix[0][0]*vector.x + this->matrix[0][1]*vector.y + this->matrix[0][2]*vector.z + this->matrix[0][3];
-    const float y = this->matrix[1][0]*vector.x + this->matrix[1][1]*vector.y + this->matrix[1][2]*vector.z + this->matrix[1][3];
-    const float z = this->matrix[2][0]*vector.x + this->matrix[2][1]*vector.y + this->matrix[2][2]*vector.z + this->matrix[2][3];
-    const float w = this->matrix[3][0]*vector.x + this->matrix[3][1]*vector.y + this->matrix[3][2]*vector.z + this->matrix[3][3];
-    assert(w != 0.0f && "Matrix4: perspective divide by zero (w = 0)");
-    return {x / w, y / w, z / w};
-}
-
-Matrix4 &Matrix4::operator+=(const Matrix4 &other) { *this = *this + other; return *this; }
-Matrix4 &Matrix4::operator-=(const Matrix4 &other) { *this = *this - other; return *this; }
-Matrix4 &Matrix4::operator*=(const Matrix4 &other) { *this = *this * other; return *this; }
-Matrix4 &Matrix4::operator*=(const float scalar)   { *this = *this * scalar; return *this; }
-
-bool Matrix4::operator==(const Matrix4 &other) const {
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            if (this->matrix[row][column] != other.matrix[row][column]) return false;
-    return true;
-}
-
-bool Matrix4::operator!=(const Matrix4 &other) const { return !(*this == other); }
-
-Matrix4 Matrix4::transposed() const {
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            result.matrix[row][column] = this->matrix[column][row];
-    return result;
-}
-
-Scalar Matrix4::determinant() const {
-    float result = 0.0f;
-    for (int i = 0; i < 4; i++) {
-        float sub[3][3];
-        for (int j = 1; j < 4; j++) {
-            int column = 0;
-            for (int k = 0; k < 4; k++) {
-                if (k == i) continue;
-                sub[j - 1][column++] = this->matrix[j][k];
+    Matrix4::Matrix4() {
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                matrix[row][column] = 0.0f;
             }
         }
-        const float cofactor = sub[0][0] * (sub[1][1]*sub[2][2] - sub[1][2]*sub[2][1])
-                             - sub[0][1] * (sub[1][0]*sub[2][2] - sub[1][2]*sub[2][0])
-                             + sub[0][2] * (sub[1][0]*sub[2][1] - sub[1][1]*sub[2][0]);
-        result += (i % 2 == 0 ? 1.0f : -1.0f) * this->matrix[0][i] * cofactor;
     }
-    return Scalar(result);
-}
 
-Matrix4 Matrix4::inverted() const {
-    const float determinant = static_cast<float>(this->determinant());
-    assert(determinant != 0.0f && "Matrix4: cannot invert a singular matrix (determinant is zero)");
-
-    float inverse[4][4];
-    inverse[0][0] =  this->matrix[1][1]*this->matrix[2][2]*this->matrix[3][3] - this->matrix[1][1]*this->matrix[2][3]*this->matrix[3][2] - this->matrix[2][1]*this->matrix[1][2]*this->matrix[3][3] + this->matrix[2][1]*this->matrix[1][3]*this->matrix[3][2] + this->matrix[3][1]*this->matrix[1][2]*this->matrix[2][3] - this->matrix[3][1]*this->matrix[1][3]*this->matrix[2][2];
-    inverse[1][0] = -this->matrix[1][0]*this->matrix[2][2]*this->matrix[3][3] + this->matrix[1][0]*this->matrix[2][3]*this->matrix[3][2] + this->matrix[2][0]*this->matrix[1][2]*this->matrix[3][3] - this->matrix[2][0]*this->matrix[1][3]*this->matrix[3][2] - this->matrix[3][0]*this->matrix[1][2]*this->matrix[2][3] + this->matrix[3][0]*this->matrix[1][3]*this->matrix[2][2];
-    inverse[2][0] =  this->matrix[1][0]*this->matrix[2][1]*this->matrix[3][3] - this->matrix[1][0]*this->matrix[2][3]*this->matrix[3][1] - this->matrix[2][0]*this->matrix[1][1]*this->matrix[3][3] + this->matrix[2][0]*this->matrix[1][3]*this->matrix[3][1] + this->matrix[3][0]*this->matrix[1][1]*this->matrix[2][3] - this->matrix[3][0]*this->matrix[1][3]*this->matrix[2][1];
-    inverse[3][0] = -this->matrix[1][0]*this->matrix[2][1]*this->matrix[3][2] + this->matrix[1][0]*this->matrix[2][2]*this->matrix[3][1] + this->matrix[2][0]*this->matrix[1][1]*this->matrix[3][2] - this->matrix[2][0]*this->matrix[1][2]*this->matrix[3][1] - this->matrix[3][0]*this->matrix[1][1]*this->matrix[2][2] + this->matrix[3][0]*this->matrix[1][2]*this->matrix[2][1];
-    inverse[0][1] = -this->matrix[0][1]*this->matrix[2][2]*this->matrix[3][3] + this->matrix[0][1]*this->matrix[2][3]*this->matrix[3][2] + this->matrix[2][1]*this->matrix[0][2]*this->matrix[3][3] - this->matrix[2][1]*this->matrix[0][3]*this->matrix[3][2] - this->matrix[3][1]*this->matrix[0][2]*this->matrix[2][3] + this->matrix[3][1]*this->matrix[0][3]*this->matrix[2][2];
-    inverse[1][1] =  this->matrix[0][0]*this->matrix[2][2]*this->matrix[3][3] - this->matrix[0][0]*this->matrix[2][3]*this->matrix[3][2] - this->matrix[2][0]*this->matrix[0][2]*this->matrix[3][3] + this->matrix[2][0]*this->matrix[0][3]*this->matrix[3][2] + this->matrix[3][0]*this->matrix[0][2]*this->matrix[2][3] - this->matrix[3][0]*this->matrix[0][3]*this->matrix[2][2];
-    inverse[2][1] = -this->matrix[0][0]*this->matrix[2][1]*this->matrix[3][3] + this->matrix[0][0]*this->matrix[2][3]*this->matrix[3][1] + this->matrix[2][0]*this->matrix[0][1]*this->matrix[3][3] - this->matrix[2][0]*this->matrix[0][3]*this->matrix[3][1] - this->matrix[3][0]*this->matrix[0][1]*this->matrix[2][3] + this->matrix[3][0]*this->matrix[0][3]*this->matrix[2][1];
-    inverse[3][1] =  this->matrix[0][0]*this->matrix[2][1]*this->matrix[3][2] - this->matrix[0][0]*this->matrix[2][2]*this->matrix[3][1] - this->matrix[2][0]*this->matrix[0][1]*this->matrix[3][2] + this->matrix[2][0]*this->matrix[0][2]*this->matrix[3][1] + this->matrix[3][0]*this->matrix[0][1]*this->matrix[2][2] - this->matrix[3][0]*this->matrix[0][2]*this->matrix[2][1];
-    inverse[0][2] =  this->matrix[0][1]*this->matrix[1][2]*this->matrix[3][3] - this->matrix[0][1]*this->matrix[1][3]*this->matrix[3][2] - this->matrix[1][1]*this->matrix[0][2]*this->matrix[3][3] + this->matrix[1][1]*this->matrix[0][3]*this->matrix[3][2] + this->matrix[3][1]*this->matrix[0][2]*this->matrix[1][3] - this->matrix[3][1]*this->matrix[0][3]*this->matrix[1][2];
-    inverse[1][2] = -this->matrix[0][0]*this->matrix[1][2]*this->matrix[3][3] + this->matrix[0][0]*this->matrix[1][3]*this->matrix[3][2] + this->matrix[1][0]*this->matrix[0][2]*this->matrix[3][3] - this->matrix[1][0]*this->matrix[0][3]*this->matrix[3][2] - this->matrix[3][0]*this->matrix[0][2]*this->matrix[1][3] + this->matrix[3][0]*this->matrix[0][3]*this->matrix[1][2];
-    inverse[2][2] =  this->matrix[0][0]*this->matrix[1][1]*this->matrix[3][3] - this->matrix[0][0]*this->matrix[1][3]*this->matrix[3][1] - this->matrix[1][0]*this->matrix[0][1]*this->matrix[3][3] + this->matrix[1][0]*this->matrix[0][3]*this->matrix[3][1] + this->matrix[3][0]*this->matrix[0][1]*this->matrix[1][3] - this->matrix[3][0]*this->matrix[0][3]*this->matrix[1][1];
-    inverse[3][2] = -this->matrix[0][0]*this->matrix[1][1]*this->matrix[3][2] + this->matrix[0][0]*this->matrix[1][2]*this->matrix[3][1] + this->matrix[1][0]*this->matrix[0][1]*this->matrix[3][2] - this->matrix[1][0]*this->matrix[0][2]*this->matrix[3][1] - this->matrix[3][0]*this->matrix[0][1]*this->matrix[1][2] + this->matrix[3][0]*this->matrix[0][2]*this->matrix[1][1];
-    inverse[0][3] = -this->matrix[0][1]*this->matrix[1][2]*this->matrix[2][3] + this->matrix[0][1]*this->matrix[1][3]*this->matrix[2][2] + this->matrix[1][1]*this->matrix[0][2]*this->matrix[2][3] - this->matrix[1][1]*this->matrix[0][3]*this->matrix[2][2] - this->matrix[2][1]*this->matrix[0][2]*this->matrix[1][3] + this->matrix[2][1]*this->matrix[0][3]*this->matrix[1][2];
-    inverse[1][3] =  this->matrix[0][0]*this->matrix[1][2]*this->matrix[2][3] - this->matrix[0][0]*this->matrix[1][3]*this->matrix[2][2] - this->matrix[1][0]*this->matrix[0][2]*this->matrix[2][3] + this->matrix[1][0]*this->matrix[0][3]*this->matrix[2][2] + this->matrix[2][0]*this->matrix[0][2]*this->matrix[1][3] - this->matrix[2][0]*this->matrix[0][3]*this->matrix[1][2];
-    inverse[2][3] = -this->matrix[0][0]*this->matrix[1][1]*this->matrix[2][3] + this->matrix[0][0]*this->matrix[1][3]*this->matrix[2][1] + this->matrix[1][0]*this->matrix[0][1]*this->matrix[2][3] - this->matrix[1][0]*this->matrix[0][3]*this->matrix[2][1] - this->matrix[2][0]*this->matrix[0][1]*this->matrix[1][3] + this->matrix[2][0]*this->matrix[0][3]*this->matrix[1][1];
-    inverse[3][3] =  this->matrix[0][0]*this->matrix[1][1]*this->matrix[2][2] - this->matrix[0][0]*this->matrix[1][2]*this->matrix[2][1] - this->matrix[1][0]*this->matrix[0][1]*this->matrix[2][2] + this->matrix[1][0]*this->matrix[0][2]*this->matrix[2][1] + this->matrix[2][0]*this->matrix[0][1]*this->matrix[1][2] - this->matrix[2][0]*this->matrix[0][2]*this->matrix[1][1];
-
-    Matrix4 result;
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            result.matrix[row][column] = inverse[row][column] / determinant;
-    return result;
-}
-
-bool Matrix4::approximately(const Matrix4 &other, const float epsilon) const {
-    for (int row = 0; row < 4; row++)
-        for (int column = 0; column < 4; column++)
-            if (fabsf(this->matrix[row][column] - other.matrix[row][column]) > epsilon) return false;
-    return true;
-}
-
-Vector3 Matrix4::translation() const {
-    return {this->matrix[0][3], this->matrix[1][3], this->matrix[2][3]};
-}
-
-Quaternion Matrix4::rotation() const {
-    const Vector3 scale = this->scale();
-    assert(scale.x != 0.0f && scale.y != 0.0f && scale.z != 0.0f && "Matrix4::rotation: degenerate matrix (zero scale component)");
-
-    const float r00 = this->matrix[0][0] / scale.x, r01 = this->matrix[0][1] / scale.y, r02 = this->matrix[0][2] / scale.z;
-    const float r10 = this->matrix[1][0] / scale.x, r11 = this->matrix[1][1] / scale.y, r12 = this->matrix[1][2] / scale.z;
-    const float r20 = this->matrix[2][0] / scale.x, r21 = this->matrix[2][1] / scale.y, r22 = this->matrix[2][2] / scale.z;
-    const float trace = r00 + r11 + r22;
-
-    float qw, qx, qy, qz;
-    if (trace > 0.0f) {
-        const float s = 0.5f / sqrtf(trace + 1.0f);
-        qw = 0.25f / s;
-        qx = (r21 - r12) * s;
-        qy = (r02 - r20) * s;
-        qz = (r10 - r01) * s;
-    } else if (r00 > r11 && r00 > r22) {
-        const float s = 2.0f * sqrtf(1.0f + r00 - r11 - r22);
-        qw = (r21 - r12) / s;
-        qx = 0.25f * s;
-        qy = (r01 + r10) / s;
-        qz = (r02 + r20) / s;
-    } else if (r11 > r22) {
-        const float s = 2.0f * sqrtf(1.0f + r11 - r00 - r22);
-        qw = (r02 - r20) / s;
-        qx = (r01 + r10) / s;
-        qy = 0.25f * s;
-        qz = (r12 + r21) / s;
-    } else {
-        const float s = 2.0f * sqrtf(1.0f + r22 - r00 - r11);
-        qw = (r10 - r01) / s;
-        qx = (r02 + r20) / s;
-        qy = (r12 + r21) / s;
-        qz = 0.25f * s;
+    Matrix4::Matrix4(float diagonal) : Matrix4() {
+        matrix[0][0] = diagonal;
+        matrix[1][1] = diagonal;
+        matrix[2][2] = diagonal;
+        matrix[3][3] = diagonal;
     }
-    return {qx, qy, qz, qw};
-}
 
-Vector3 Matrix4::scale() const {
-    return {
-        sqrtf(this->matrix[0][0]*this->matrix[0][0] + this->matrix[1][0]*this->matrix[1][0] + this->matrix[2][0]*this->matrix[2][0]),
-        sqrtf(this->matrix[0][1]*this->matrix[0][1] + this->matrix[1][1]*this->matrix[1][1] + this->matrix[2][1]*this->matrix[2][1]),
-        sqrtf(this->matrix[0][2]*this->matrix[0][2] + this->matrix[1][2]*this->matrix[1][2] + this->matrix[2][2]*this->matrix[2][2])
-    };
-}
+    float Matrix4::operator()(int row, int column) const {
+        assert(row >= 0 && row < 4);
+        assert(column >= 0 && column < 4);
+        return this->matrix[row][column];
+    }
 
-Vector3 Matrix4::anterior()  const { return {-this->matrix[0][2], -this->matrix[1][2], -this->matrix[2][2]}; }
-Vector3 Matrix4::posterior() const { return { this->matrix[0][2],  this->matrix[1][2],  this->matrix[2][2]}; }
-Vector3 Matrix4::superior()  const { return { this->matrix[0][1],  this->matrix[1][1],  this->matrix[2][1]}; }
-Vector3 Matrix4::inferior()  const { return {-this->matrix[0][1], -this->matrix[1][1], -this->matrix[2][1]}; }
-Vector3 Matrix4::dexter()    const { return { this->matrix[0][0],  this->matrix[1][0],  this->matrix[2][0]}; }
-Vector3 Matrix4::sinister()  const { return {-this->matrix[0][0], -this->matrix[1][0], -this->matrix[2][0]}; }
+    float& Matrix4::operator()(int row, int column) {
+        assert(row >= 0 && row < 4);
+        assert(column >= 0 && column < 4);
+        return this->matrix[row][column];
+    }
 
-bool Matrix4::decompose(Vector3 &translation, Quaternion &rotation, Vector3 &scale) const {
-    assert(static_cast<float>(this->determinant()) != 0.0f && "Matrix4::decompose: cannot decompose a singular matrix");
-    translation = this->translation();
-    scale = this->scale();
-    rotation = this->rotation();
-    return true;
-}
+    Matrix4 Matrix4::operator+(const Matrix4& other) const {
+        Matrix4 result;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                result.matrix[row][column] = this->matrix[row][column] + other.matrix[row][column];
+            }
+        }
+        return result;
+    }
 
-Matrix4 Matrix4::identity() { return Matrix4(1.0f); }
+    Matrix4 Matrix4::operator-(const Matrix4& other) const {
+        Matrix4 result;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                result.matrix[row][column] = this->matrix[row][column] - other.matrix[row][column];
+            }
+        }
+        return result;
+    }
 
-Matrix4 Matrix4::translate(const Vector3 &translation) {
-    Matrix4 result = identity();
-    result.matrix[0][3] = translation.x;
-    result.matrix[1][3] = translation.y;
-    result.matrix[2][3] = translation.z;
-    return result;
-}
+    Matrix4 Matrix4::operator*(const Matrix4& other) const {
+        Matrix4 result;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                result.matrix[row][column] =
+                    this->matrix[row][0] * other.matrix[0][column] +
+                    this->matrix[row][1] * other.matrix[1][column] +
+                    this->matrix[row][2] * other.matrix[2][column] +
+                    this->matrix[row][3] * other.matrix[3][column];
+            }
+        }
+        return result;
+    }
 
-Matrix4 Matrix4::rotate(const Quaternion &rotation) {
-    assert(fabsf(rotation.x*rotation.x + rotation.y*rotation.y + rotation.z*rotation.z + rotation.w*rotation.w - 1.0f) < 1e-4f && "Matrix4::rotate: quaternion must be normalized");
-    Matrix4 result = identity();
-    result.matrix[0][0] = 1.0f - 2.0f*rotation.y*rotation.y - 2.0f*rotation.z*rotation.z;
-    result.matrix[0][1] = 2.0f*rotation.x*rotation.y - 2.0f*rotation.z*rotation.w;
-    result.matrix[0][2] = 2.0f*rotation.x*rotation.z + 2.0f*rotation.y*rotation.w;
-    result.matrix[1][0] = 2.0f*rotation.x*rotation.y + 2.0f*rotation.z*rotation.w;
-    result.matrix[1][1] = 1.0f - 2.0f*rotation.x*rotation.x - 2.0f*rotation.z*rotation.z;
-    result.matrix[1][2] = 2.0f*rotation.y*rotation.z - 2.0f*rotation.x*rotation.w;
-    result.matrix[2][0] = 2.0f*rotation.x*rotation.z - 2.0f*rotation.y*rotation.w;
-    result.matrix[2][1] = 2.0f*rotation.y*rotation.z + 2.0f*rotation.x*rotation.w;
-    result.matrix[2][2] = 1.0f - 2.0f*rotation.x*rotation.x - 2.0f*rotation.y*rotation.y;
-    return result;
-}
+    Vector4 Matrix4::operator*(const Vector4& vector) const {
+        return Vector4(
+            this->matrix[0][0] * vector.x + this->matrix[0][1] * vector.y + this->matrix[0][2] * vector.z + this->matrix[0][3] * vector.w,
+            this->matrix[1][0] * vector.x + this->matrix[1][1] * vector.y + this->matrix[1][2] * vector.z + this->matrix[1][3] * vector.w,
+            this->matrix[2][0] * vector.x + this->matrix[2][1] * vector.y + this->matrix[2][2] * vector.z + this->matrix[2][3] * vector.w,
+            this->matrix[3][0] * vector.x + this->matrix[3][1] * vector.y + this->matrix[3][2] * vector.z + this->matrix[3][3] * vector.w
+        );
+    }
 
-Matrix4 Matrix4::scale(const Vector3 &scale) {
-    Matrix4 result = identity();
-    result.matrix[0][0] = scale.x;
-    result.matrix[1][1] = scale.y;
-    result.matrix[2][2] = scale.z;
-    return result;
-}
+    Matrix4 Matrix4::transposed() const {
+        Matrix4 result;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                result.matrix[column][row] = this->matrix[row][column];
+            }
+        }
+        return result;
+    }
 
-Matrix4 Matrix4::compose(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale) {
-    return translate(translation) * rotate(rotation) * Matrix4::scale(scale);
-}
+    Matrix4 Matrix4::inverted() const {
+        float s0 = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        float s1 = matrix[0][0] * matrix[1][2] - matrix[0][2] * matrix[1][0];
+        float s2 = matrix[0][0] * matrix[1][3] - matrix[0][3] * matrix[1][0];
+        float s3 = matrix[0][1] * matrix[1][2] - matrix[0][2] * matrix[1][1];
+        float s4 = matrix[0][1] * matrix[1][3] - matrix[0][3] * matrix[1][1];
+        float s5 = matrix[0][2] * matrix[1][3] - matrix[0][3] * matrix[1][2];
 
-Matrix4 Matrix4::perspective(const float fov, const float aspect, const float zNear, const float zFar) {
-    assert(fov > 0.0f && "Matrix4::perspective: fov must be positive");
-    assert(aspect != 0.0f && "Matrix4::perspective: aspect ratio cannot be zero");
-    assert(zNear > 0.0f && "Matrix4::perspective: zNear must be positive");
-    assert(zNear != zFar && "Matrix4::perspective: zNear and zFar cannot be equal");
-    const float tangent = tanf(fov * 0.5f);
-    assert(tangent != 0.0f && "Matrix4::perspective: fov produces zero tangent");
-    Matrix4 result;
-    result.matrix[0][0] = 1.0f / (aspect * tangent);
-    result.matrix[1][1] = 1.0f / tangent;
-    result.matrix[2][2] = -(zFar + zNear) / (zFar - zNear);
-    result.matrix[2][3] = -(2.0f * zFar * zNear) / (zFar - zNear);
-    result.matrix[3][2] = -1.0f;
-    return result;
-}
+        float c0 = matrix[2][0] * matrix[3][1] - matrix[2][1] * matrix[3][0];
+        float c1 = matrix[2][0] * matrix[3][2] - matrix[2][2] * matrix[3][0];
+        float c2 = matrix[2][0] * matrix[3][3] - matrix[2][3] * matrix[3][0];
+        float c3 = matrix[2][1] * matrix[3][2] - matrix[2][2] * matrix[3][1];
+        float c4 = matrix[2][1] * matrix[3][3] - matrix[2][3] * matrix[3][1];
+        float c5 = matrix[2][2] * matrix[3][3] - matrix[2][3] * matrix[3][2];
 
-Matrix4 Matrix4::orthographic(const float left, const float right, const float bottom, const float top, const float zNear, const float zFar) {
-    assert(right != left && "Matrix4::orthographic: left and right cannot be equal");
-    assert(top != bottom && "Matrix4::orthographic: top and bottom cannot be equal");
-    assert(zNear != zFar && "Matrix4::orthographic: zNear and zFar cannot be equal");
-    Matrix4 result = identity();
-    result.matrix[0][0] = 2.0f / (right - left);
-    result.matrix[1][1] = 2.0f / (top - bottom);
-    result.matrix[2][2] = -2.0f / (zFar - zNear);
-    result.matrix[0][3] = -(right + left) / (right - left);
-    result.matrix[1][3] = -(top + bottom) / (top - bottom);
-    result.matrix[2][3] = -(zFar + zNear) / (zFar - zNear);
-    return result;
-}
+        float det = s0 * c5 - s1 * c4 + s2 * c3 + s3 * c2 - s4 * c1 + s5 * c0;
+        assert(det != 0.0f);
+        float invDet = 1.0f / det;
 
-Matrix4 Matrix4::look(const Vector3 &eye, const Vector3 &target, const Vector3 &up) {
-    assert(eye != target && "Matrix4::look: eye and target cannot be the same point");
-    assert(static_cast<float>(up.length()) > 0.0f && "Matrix4::look: up vector must be non-zero");
-    const Vector3 forward = (target - eye).normalized();
-    const Vector3 right = forward.cross(up).normalized();
-    const Vector3 posterior = right.cross(forward);
-    Matrix4 result = identity();
-    result.matrix[0][0] = right.x;
-    result.matrix[0][1] = right.y;
-    result.matrix[0][2] = right.z;
-    result.matrix[1][0] = posterior.x;
-    result.matrix[1][1] = posterior.y;
-    result.matrix[1][2] = posterior.z;
-    result.matrix[2][0] = -forward.x;
-    result.matrix[2][1] = -forward.y;
-    result.matrix[2][2] = -forward.z;
-    result.matrix[0][3] = -static_cast<float>(right.dot(eye));
-    result.matrix[1][3] = -static_cast<float>(posterior.dot(eye));
-    result.matrix[2][3] = static_cast<float>(forward.dot(eye));
-    return result;
-}
+        Matrix4 inv;
+        inv.matrix[0][0] = (matrix[1][1] * c5 - matrix[1][2] * c4 + matrix[1][3] * c3) * invDet;
+        inv.matrix[0][1] = (-matrix[0][1] * c5 + matrix[0][2] * c4 - matrix[0][3] * c3) * invDet;
+        inv.matrix[0][2] = (matrix[3][1] * s5 - matrix[3][2] * s4 + matrix[3][3] * s3) * invDet;
+        inv.matrix[0][3] = (-matrix[2][1] * s5 + matrix[2][2] * s4 - matrix[2][3] * s3) * invDet;
 
-std::ostream &operator<<(std::ostream &os, const Matrix4 &other) {
-    for (const auto row : other.matrix)
-        os << "[ " << row[0] << ", " << row[1] << ", " << row[2] << ", " << row[3] << " ]\n";
-    return os;
+        inv.matrix[1][0] = (-matrix[1][0] * c5 + matrix[1][2] * c2 - matrix[1][3] * c1) * invDet;
+        inv.matrix[1][1] = (matrix[0][0] * c5 - matrix[0][2] * c2 + matrix[0][3] * c1) * invDet;
+        inv.matrix[1][2] = (-matrix[3][0] * s5 + matrix[3][2] * s2 - matrix[3][3] * s1) * invDet;
+        inv.matrix[1][3] = (matrix[2][0] * s5 - matrix[2][2] * s2 + matrix[2][3] * s1) * invDet;
+
+        inv.matrix[2][0] = (matrix[1][0] * c4 - matrix[1][1] * c2 + matrix[1][3] * c0) * invDet;
+        inv.matrix[2][1] = (-matrix[0][0] * c4 + matrix[0][1] * c2 - matrix[0][3] * c0) * invDet;
+        inv.matrix[2][2] = (matrix[3][0] * s4 - matrix[3][1] * s2 + matrix[3][3] * s0) * invDet;
+        inv.matrix[2][3] = (-matrix[2][0] * s4 + matrix[2][1] * s2 - matrix[2][3] * s0) * invDet;
+
+        inv.matrix[3][0] = (-matrix[1][0] * c3 + matrix[1][1] * c1 - matrix[1][2] * c0) * invDet;
+        inv.matrix[3][1] = (matrix[0][0] * c3 - matrix[0][1] * c1 + matrix[0][2] * c0) * invDet;
+        inv.matrix[3][2] = (-matrix[3][0] * s3 + matrix[3][1] * s1 - matrix[3][2] * s0) * invDet;
+        inv.matrix[3][3] = (matrix[2][0] * s3 - matrix[2][1] * s1 + matrix[2][2] * s0) * invDet;
+
+        return inv;
+    }
+
+    Matrix4 Matrix4::identity() { return IDENTITY; }
+
+    Matrix4 Matrix4::translate(const Vector3& translation) {
+        Matrix4 result(1.0f);
+        result.matrix[0][3] = translation.x;
+        result.matrix[1][3] = translation.y;
+        result.matrix[2][3] = translation.z;
+        return result;
+    }
+
+    Matrix4 Matrix4::rotate(const Quaternion& rotation) {
+        Matrix4 result(1.0f);
+        float qx2 = rotation.x * rotation.x;
+        float qy2 = rotation.y * rotation.y;
+        float qz2 = rotation.z * rotation.z;
+
+        result.matrix[0][0] = 1.0f - 2.0f * (qy2 + qz2);
+        result.matrix[0][1] = 2.0f * (rotation.x * rotation.y - rotation.z * rotation.w);
+        result.matrix[0][2] = 2.0f * (rotation.x * rotation.z + rotation.y * rotation.w);
+
+        result.matrix[1][0] = 2.0f * (rotation.x * rotation.y + rotation.z * rotation.w);
+        result.matrix[1][1] = 1.0f - 2.0f * (qx2 + qz2);
+        result.matrix[1][2] = 2.0f * (rotation.y * rotation.z - rotation.x * rotation.w);
+
+        result.matrix[2][0] = 2.0f * (rotation.x * rotation.z - rotation.y * rotation.w);
+        result.matrix[2][1] = 2.0f * (rotation.y * rotation.z + rotation.x * rotation.w);
+        result.matrix[2][2] = 1.0f - 2.0f * (qx2 + qy2);
+        return result;
+    }
+
+    Matrix4 Matrix4::scale(const Vector3& factors) {
+        Matrix4 result(1.0f);
+        result.matrix[0][0] = factors.x;
+        result.matrix[1][1] = factors.y;
+        result.matrix[2][2] = factors.z;
+        return result;
+    }
+
+    Matrix4 Matrix4::orthographic(float left, float right, float bottom, float top, float zNear, float zFar) {
+        assert(right != left);
+        assert(top != bottom);
+        assert(zFar != zNear);
+
+        Matrix4 result(1.0f);
+        result.matrix[0][0] = 2.0f / (right - left);
+        result.matrix[1][1] = -2.0f / (top - bottom); // Vulkan standard Y-down clip-space rule
+        result.matrix[2][2] = 1.0f / (zFar - zNear);   // Vulkan standard [0, 1] forward depth rule
+        result.matrix[0][3] = -(right + left) / (right - left);
+        result.matrix[1][3] = -(top + bottom) / (top - bottom);
+        result.matrix[2][3] = -zNear / (zFar - zNear);
+        return result;
+    }
+
+    Matrix4 Matrix4::perspective(float fov, float aspect, float zNear, float zFar) {
+        assert(aspect != 0.0f);
+        assert(zFar != zNear);
+        float tanHalfFovy = std::tan(fov * 0.5f);
+
+        Matrix4 result;
+        result.matrix[0][0] = 1.0f / (aspect * tanHalfFovy);
+        result.matrix[1][1] = -1.0f / tanHalfFovy;   // Vulkan standard Y-down clip-space rule
+        result.matrix[2][2] = zFar / (zFar - zNear);  // Vulkan standard [0, 1] forward depth rule
+        result.matrix[2][3] = -(zFar * zNear) / (zFar - zNear);
+        result.matrix[3][2] = 1.0f;
+        return result;
+    }
+
+    Matrix4 Matrix4::look(const Vector3& eye, const Vector3& target, const Vector3& up) {
+        Vector3 zaxis = (target - eye).normalized();
+        Vector3 xaxis = zaxis.cross(up).normalized();
+        Vector3 yaxis = xaxis.cross(zaxis);
+
+        Matrix4 view(1.0f);
+        view.matrix[0][0] = xaxis.x; view.matrix[0][1] = xaxis.y; view.matrix[0][2] = xaxis.z;
+        view.matrix[1][0] = yaxis.x; view.matrix[1][1] = yaxis.y; view.matrix[1][2] = yaxis.z;
+        view.matrix[2][0] = zaxis.x; view.matrix[2][1] = zaxis.y; view.matrix[2][2] = zaxis.z;
+
+        view.matrix[0][3] = -xaxis.dot(eye);
+        view.matrix[1][3] = -yaxis.dot(eye);
+        view.matrix[2][3] = -zaxis.dot(eye);
+        return view;
+    }
+
+    bool Matrix4::decompose(Vector3& translation, Quaternion& rotation, Vector3& scale) const {
+        translation = Vector3(matrix[0][3], matrix[1][3], matrix[2][3]);
+
+        scale.x = Vector3(matrix[0][0], matrix[1][0], matrix[2][0]).length();
+        scale.y = Vector3(matrix[0][1], matrix[1][1], matrix[2][1]).length();
+        scale.z = Vector3(matrix[0][2], matrix[1][2], matrix[2][2]).length();
+
+        if (scale.x == 0.0f || scale.y == 0.0f || scale.z == 0.0f) return false;
+
+        Matrix4 pure = *this;
+        pure.matrix[0][0] /= scale.x; pure.matrix[1][0] /= scale.x; pure.matrix[2][0] /= scale.x;
+        pure.matrix[0][1] /= scale.y; pure.matrix[1][1] /= scale.y; pure.matrix[2][1] /= scale.y;
+        pure.matrix[0][2] /= scale.z; pure.matrix[1][2] /= scale.z; pure.matrix[2][2] /= scale.z;
+
+        float trace = pure.matrix[0][0] + pure.matrix[1][1] + pure.matrix[2][2];
+        if (trace > 0.0f) {
+            float root = std::sqrt(trace + 1.0f) * 2.0f;
+            rotation.w = 0.25f * root;
+            rotation.x = (pure.matrix[2][1] - pure.matrix[1][2]) / root;
+            rotation.y = (pure.matrix[0][2] - pure.matrix[2][0]) / root;
+            rotation.z = (pure.matrix[1][0] - pure.matrix[0][1]) / root;
+        } else if ((pure.matrix[0][0] > pure.matrix[1][1]) && (pure.matrix[0][0] > pure.matrix[2][2])) {
+            float root = std::sqrt(1.0f + pure.matrix[0][0] - pure.matrix[1][1] - pure.matrix[2][2]) * 2.0f;
+            rotation.w = (pure.matrix[2][1] - pure.matrix[1][2]) / root;
+            rotation.x = 0.25f * root;
+            rotation.y = (pure.matrix[0][1] + pure.matrix[1][0]) / root;
+            rotation.z = (pure.matrix[0][2] + pure.matrix[2][0]) / root;
+        } else if (pure.matrix[1][1] > pure.matrix[2][2]) {
+            float root = std::sqrt(1.0f + pure.matrix[1][1] - pure.matrix[0][0] - pure.matrix[2][2]) * 2.0f;
+            rotation.w = (pure.matrix[0][2] - pure.matrix[2][0]) / root;
+            rotation.x = (pure.matrix[0][1] + pure.matrix[1][0]) / root;
+            rotation.y = 0.25f * root;
+            rotation.z = (pure.matrix[1][2] + pure.matrix[2][1]) / root;
+        } else {
+            float root = std::sqrt(1.0f + pure.matrix[2][2] - pure.matrix[0][0] - pure.matrix[1][1]) * 2.0f;
+            rotation.w = (pure.matrix[1][0] - pure.matrix[0][1]) / root;
+            rotation.x = (pure.matrix[0][2] + pure.matrix[2][0]) / root;
+            rotation.y = (pure.matrix[1][2] + pure.matrix[2][1]) / root;
+            rotation.z = 0.25f * root;
+        }
+        return true;
+    }
 }

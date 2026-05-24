@@ -30,7 +30,7 @@ namespace voxyl::graphics {
         Pipeline(const Pipeline&) = delete;
         Pipeline& operator=(const Pipeline&) = delete;
 
-        void bind(VkCommandBuffer buffer);
+        void bind(const VkCommandBuffer_T* buffer) const;
 
         [[nodiscard]] VkPipeline handle() const { return pipeline; }
         [[nodiscard]] VkPipelineLayout layout() const { return shape; }
@@ -39,9 +39,9 @@ namespace voxyl::graphics {
         static void flat(State& state);
 
     private:
-        [[nodiscard]] std::vector<char> read(const std::string& path);
+        [[nodiscard]] static std::vector<char> read(const std::string& path);
         void build(const std::string& vertex, const std::string& fragment, const State& state);
-        void compile(const std::vector<char>& code, VkShaderModule* module);
+        void compile(const std::vector<char>& code, VkShaderModule* module) const;
 
         VkDevice core;
         VkPipeline pipeline;

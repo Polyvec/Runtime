@@ -1,56 +1,57 @@
-#ifndef QUATERNION_HPP
-#define QUATERNION_HPP
+#pragma once
 
 #include "scalar.hpp"
 #include "vector3.hpp"
 #include <limits>
 #include <ostream>
 
-struct Quaternion {
-    float x, y, z, w;
+namespace voxyl::math {
 
-    Quaternion();
-    Quaternion(float x, float y, float z, float w);
+    struct Quaternion {
+        float x, y, z, w;
 
-    Quaternion operator+(const Quaternion &quaternion) const;
-    Quaternion operator-(const Quaternion &quaternion) const;
-    Quaternion operator*(const Quaternion &quaternion) const;
-    Quaternion operator*(float scalar) const;
+        Quaternion();
+        Quaternion(float x, float y, float z, float w);
 
-    Quaternion &operator+=(const Quaternion &quaternion);
-    Quaternion &operator-=(const Quaternion &quaternion);
-    Quaternion &operator*=(const Quaternion &quaternion);
-    Quaternion &operator*=(float scalar);
+        Quaternion operator+(const Quaternion &quaternion) const;
+        Quaternion operator-(const Quaternion &quaternion) const;
+        Quaternion operator*(const Quaternion &quaternion) const;
+        Quaternion operator*(float scalar) const;
 
-    bool operator==(const Quaternion &quaternion) const;
-    bool operator!=(const Quaternion &quaternion) const;
+        Quaternion &operator+=(const Quaternion &quaternion);
+        Quaternion &operator-=(const Quaternion &quaternion);
+        Quaternion &operator*=(const Quaternion &quaternion);
+        Quaternion &operator*=(float scalar);
 
-    Vector3 operator*(const Vector3 &vector) const;
+        bool operator==(const Quaternion &quaternion) const;
+        bool operator!=(const Quaternion &quaternion) const;
 
-    [[nodiscard]] Scalar length() const;
-    [[nodiscard]] Scalar dot(const Quaternion &quaternion) const;
+        Vector3 operator*(const Vector3 &vector) const;
 
-    [[nodiscard]] Quaternion normalized() const;
-    [[nodiscard]] Quaternion conjugate() const;
-    [[nodiscard]] Quaternion inverse() const;
-    [[nodiscard]] Quaternion interpolate(const Quaternion &quaternion, float factor) const;
+        [[nodiscard]] Scalar length() const;
+        [[nodiscard]] Scalar dot(const Quaternion &quaternion) const;
 
-    [[nodiscard]] bool approximately(const Quaternion &quaternion, float epsilon = std::numeric_limits<float>::epsilon()) const;
+        [[nodiscard]] Quaternion normalized() const;
+        [[nodiscard]] Quaternion conjugate() const;
+        [[nodiscard]] Quaternion inverse() const;
+        [[nodiscard]] Quaternion interpolate(const Quaternion &quaternion, float factor) const;
 
-    [[nodiscard]] Vector3 euler() const;
+        [[nodiscard]] bool approximately(const Quaternion &quaternion, float epsilon = std::numeric_limits<float>::epsilon()) const;
 
-    static Quaternion euler(const Vector3 &degrees);
-    static Quaternion between(const Vector3 &from, const Vector3 &to);
-    static Quaternion look(const Vector3 &forward, const Vector3 &up = Vector3::UP);
-    static Quaternion around(float angle, const Vector3 &axis);
+        [[nodiscard]] Vector3 euler() const;
 
-    static const Quaternion IDENTITY;
+        static Quaternion euler(const Vector3 &degrees);
+        static Quaternion between(const Vector3 &from, const Vector3 &to);
+        static Quaternion look(const Vector3 &forward, const Vector3 &up = Vector3::UP);
+        static Quaternion around(float angle, const Vector3 &axis);
 
-    friend std::ostream &operator<<(std::ostream &os, const Quaternion &quaternion);
-};
+        static const Quaternion IDENTITY;
 
-inline Quaternion operator*(const float scalar, const Quaternion &quaternion) {
-    return quaternion * scalar;
+        friend std::ostream &operator<<(std::ostream &os, const Quaternion &quaternion);
+    };
+
+    inline Quaternion operator*(const float scalar, const Quaternion &quaternion) {
+        return quaternion * scalar;
+    }
+
 }
-
-#endif

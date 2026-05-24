@@ -2,18 +2,15 @@
 
 #include <vulkan/vulkan.h>
 #include <vector>
+#include "../include/math/vector2.hpp"
+#include "../include/math/vector3.hpp"
 
 namespace voxyl::graphics {
 
     struct Vertex {
-        float x;
-        float y;
-        float z;
-        float r;
-        float g;
-        float b;
-        float u;
-        float v;
+        math::Vector3 position;
+        math::Vector3 color;
+        math::Vector2 uv;
 
         static VkVertexInputBindingDescription binding();
         static std::vector<VkVertexInputAttributeDescription> attributes();

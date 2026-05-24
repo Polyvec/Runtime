@@ -1,91 +1,110 @@
 #include "../include/math/transform.hpp"
 #include <cassert>
 
-const Transform Transform::IDENTITY = Transform(
-    Vector3(0.0f, 0.0f, 0.0f),
-    Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
-    Vector3(1.0f, 1.0f, 1.0f)
-);
+namespace voxyl::math {
 
-Transform::Transform()
-    : translation(0.0f, 0.0f, 0.0f)
-    , rotation(0.0f, 0.0f, 0.0f, 1.0f)
-    , scale(1.0f, 1.0f, 1.0f) {}
+    const Transform Transform::IDENTITY = Transform(
+        Vector3(0.0f, 0.0f, 0.0f),
+        Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        Vector3(1.0f, 1.0f, 1.0f)
+    );
 
-Transform::Transform(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
-    : translation(translation)
-    , rotation(rotation)
-    , scale(scale) {}
+    Transform::Transform()
+        : translation(0.0f, 0.0f, 0.0f)
+        , rotation(0.0f, 0.0f, 0.0f, 1.0f)
+        , scale(1.0f, 1.0f, 1.0f) {}
 
-Transform Transform::operator*(const Transform &transform) const {
-    return {
-        this->translation + this->rotation * (this->scale * transform.translation),
-        (this->rotation * transform.rotation).normalized(),
-        Vector3(this->scale.x * transform.scale.x, this->scale.y * transform.scale.y, this->scale.z * transform.scale.z)
-    };
-}
+    Transform::Transform(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
+        : translation(translation)
+        , rotation(rotation)
+        , scale(scale) {}
 
-Transform &Transform::operator*=(const Transform &transform) { *this = *this * transform; return *this; }
+    Transform Transform::operator*(const Transform &transform) const {
+        return {
+            this->translation + this->rotation * (this->scale * transform.translation),
+            (this->rotation * transform.rotation).normalized(),
+            Vector3(this->scale.x * transform.scale.x, this->scale.y * transform.scale.y, this->scale.z * transform.scale.z)
+        };
+    }
 
-bool Transform::operator==(const Transform &transform) const {
-    return this->translation == transform.translation &&
-           this->rotation    == transform.rotation &&
-           this->scale       == transform.scale;
-}
+    Transform &Transform::operator*=(const Transform &transform) {
+        *this = *this * transform;
+        return *this;
+    }
 
-bool Transform::operator!=(const Transform &transform) const { return !(*this == transform); }
+    bool Transform::operator==(const Transform &transform) const {
+        return this->translation == transform.translation &&
+               this->rotation    == transform.rotation &&
+               this->scale       == transform.scale;
+    }
 
-Matrix4 Transform::matrix() const {
-    return Matrix4::compose(this->translation, this->rotation, this->scale);
-}
+    bool Transform::operator!=(const Transform &transform) const {
+        return !(*this == transform);
+    }
 
-Vector3 Transform::forward() const { return this->rotation * Vector3::FORWARD; }
-Vector3 Transform::right()   const { return this->rotation * Vector3::RIGHT; }
-Vector3 Transform::up()      const { return this->rotation * Vector3::UP; }
+    Matrix4 Transform::matrix() const {
+        return Matrix4::translate(this->translation) * Matrix4::rotate(this->rotation) * Matrix4::scale(this->scale);
+    }
 
-Transform Transform::inversed() const {
-    assert(this->scale.x != 0.0f && this->scale.y != 0.0f && this->scale.z != 0.0f && "Transform::inversed: scale cannot be zero");
-    const Quaternion inverted = this->rotation.inverse();
-    const Vector3 reciprocal = Vector3(1.0f / this->scale.x, 1.0f / this->scale.y, 1.0f / this->scale.z);
-    const Vector3 position   = inverted * (reciprocal * -this->translation);
-    return {position, inverted, reciprocal};
-}
+    Vector3 Transform::forward() const {
+        return this->rotation * Vector3::FORWARD;
+    }
 
-Transform Transform::interpolate(const Transform &transform, float factor) const {
-    factor = fmaxf(0.0f, fminf(factor, 1.0f));
-    return {
-        this->translation.interpolate(transform.translation, factor),
-        this->rotation.interpolate(transform.rotation, factor),
-        this->scale.interpolate(transform.scale, factor)
-    };
-}
+    Vector3 Transform::right() const {
+        return this->rotation * Vector3::RIGHT;
+    }
 
-Vector3 Transform::point(const Vector3 &point) const {
-    return this->translation + this->rotation * (this->scale * point);
-}
+    Vector3 Transform::up() const {
+        return this->rotation * Vector3::UP;
+    }
 
-Vector3 Transform::direction(const Vector3 &direction) const {
-    return this->rotation * direction;
-}
+    Transform Transform::inversed() const {
+        Quaternion inverseRotation = this->rotation.inverse();
+        Vector3 inverseScale = Vector3(1.0f / this->scale.x, 1.0f / this->scale.y, 1.0f / this->scale.z);
+        Vector3 inverseTranslation = inverseRotation * (-this->translation);
+        inverseTranslation.x *= inverseScale.x;
+        inverseTranslation.y *= inverseScale.y;
+        inverseTranslation.z *= inverseScale.z;
+        return {inverseTranslation, inverseRotation, inverseScale};
+    }
 
-bool Transform::approximately(const Transform &transform, const float epsilon) const {
-    return this->translation.approximately(transform.translation, epsilon) &&
-           this->rotation.approximately(transform.rotation, epsilon) &&
-           this->scale.approximately(transform.scale, epsilon);
-}
+    Transform Transform::interpolate(const Transform &transform, float factor) const {
+        factor = std::fmax(0.0f, std::fmin(factor, 1.0f));
+        return {
+            this->translation.interpolate(transform.translation, factor),
+            this->rotation.interpolate(transform.rotation, factor),
+            this->scale.interpolate(transform.scale, factor)
+        };
+    }
 
-Transform Transform::from(const Matrix4 &matrix) {
-    Vector3 translation;
-    Quaternion rotation;
-    Vector3 scale;
-    const bool healthy = matrix.decompose(translation, rotation, scale);
-    assert(healthy && "Transform::from: matrix decomposition failed (singular or degenerate matrix)");
-    return {translation, rotation, scale};
-}
+    Vector3 Transform::point(const Vector3 &point) const {
+        return this->translation + this->rotation * (this->scale * point);
+    }
 
-std::ostream &operator<<(std::ostream &os, const Transform &transform) {
-    os << "Transform(translation=" << transform.translation
-       << ", rotation="            << transform.rotation
-       << ", scale="               << transform.scale << ")";
-    return os;
+    Vector3 Transform::direction(const Vector3 &direction) const {
+        return this->rotation * direction;
+    }
+
+    bool Transform::approximately(const Transform &transform, const float epsilon) const {
+        return this->translation.approximately(transform.translation, epsilon) &&
+               this->rotation.approximately(transform.rotation, epsilon) &&
+               this->scale.approximately(transform.scale, epsilon);
+    }
+
+    Transform Transform::from(const Matrix4 &matrix) {
+        Vector3 translation;
+        Quaternion rotation;
+        Vector3 scale;
+        const bool healthy = matrix.decompose(translation, rotation, scale);
+        assert(healthy && "Transform::from: matrix decomposition failed (singular or degenerate matrix)");
+        return {translation, rotation, scale};
+    }
+
+    std::ostream &operator<<(std::ostream &stream, const Transform &transform) {
+        stream << "Transform(translation=" << transform.translation
+               << ", rotation="            << transform.rotation
+               << ", scale="               << transform.scale << ")";
+        return stream;
+    }
+
 }

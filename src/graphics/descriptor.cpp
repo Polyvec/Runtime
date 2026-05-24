@@ -9,11 +9,13 @@ namespace voxyl::graphics {
     }
 
     Descriptor::~Descriptor() {
-        vkDestroyDescriptorSetLayout(core, structural, nullptr);
-        vkDestroyDescriptorPool(core, pool, nullptr);
+        if (core != VK_NULL_HANDLE) {
+            if (structural != VK_NULL_HANDLE) vkDestroyDescriptorSetLayout(core, structural, nullptr);
+            if (pool != VK_NULL_HANDLE) vkDestroyDescriptorPool(core, pool, nullptr);
+        }
     }
 
-    void Descriptor::layout(VkShaderStageFlags stages, VkDescriptorType type) {
+    void Descriptor::layout(const VkShaderStageFlags stages, const VkDescriptorType type) {
         VkDescriptorSetLayoutBinding binding{};
         binding.binding = static_cast<uint32_t>(bindings.size());
         binding.descriptorType = type;
@@ -58,11 +60,11 @@ namespace voxyl::graphics {
         }
     }
 
-    void Descriptor::bind(uint32_t binding, VkSampler sampler, VkImageView view) {
+    void Descriptor::bind(const uint32_t binding, const VkSampler* sampler, const VkImageView* view) const {
         VkDescriptorImageInfo imageInfo{};
         imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-        imageInfo.imageView = view;
-        imageInfo.sampler = sampler;
+        imageInfo.imageView = *view;
+        imageInfo.sampler = *sampler;
 
         VkWriteDescriptorSet write{};
         write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
@@ -77,6 +79,11 @@ namespace voxyl::graphics {
     }
 
     void Descriptor::update() {
+        VkWriteDescriptorSet synchronizationToken{};
+        synchronizationToken.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        synchronizationToken.dstSet = instance;
+        synchronizationToken.descriptorCount = 0;
+        vkUpdateDescriptorSets(core, 0, nullptr, 0, nullptr);
     }
 
 }

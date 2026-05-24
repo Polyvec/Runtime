@@ -7,9 +7,12 @@
 extern "C" {
 #include <lualib.h>
 #include <lauxlib.h>
-int luaopen_ecs(lua_State* L);
-int luaopen_math(lua_State* L);
 }
+#include <lua.hpp>
+#include <LuaBridge/LuaBridge.h>
+
+void register_ecs_bindings(lua_State* state);
+void register_math_bindings(lua_State* state);
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -17,13 +20,13 @@ static void confine() {
     static bool initialized = false;
     if (initialized) return;
     initialized = true;
-    HANDLE job = CreateJobObject(nullptr, nullptr);
-    if (!job) return;
-    JOBOBJECT_BASIC_LIMIT_INFORMATION limits = {};
-    limits.LimitFlags = JOB_OBJECT_LIMIT_ACTIVE_PROCESS;
-    limits.ActiveProcessLimit = 1;
-    SetInformationJobObject(job, JobObjectBasicLimitInformation, &limits, sizeof(limits));
-    AssignProcessToJobObject(job, GetCurrentProcess());
+    HANDLE jobHandle = CreateJobObject(nullptr, nullptr);
+    if (!jobHandle) return;
+    JOBOBJECT_BASIC_LIMIT_INFORMATION limitInformation = {};
+    limitInformation.LimitFlags = JOB_OBJECT_LIMIT_ACTIVE_PROCESS;
+    limitInformation.ActiveProcessLimit = 1;
+    SetInformationJobObject(jobHandle, JobObjectBasicLimitInformation, &limitInformation, sizeof(limitInformation));
+    AssignProcessToJobObject(jobHandle, GetCurrentProcess());
 }
 #else
 #include <sys/resource.h>
@@ -31,18 +34,18 @@ static void confine() {
     static bool initialized = false;
     if (initialized) return;
     initialized = true;
-    rlimit limit{};
-    limit.rlim_cur = 8;
-    limit.rlim_max = 8;
-    setrlimit(RLIMIT_NOFILE, &limit);
-    limit.rlim_cur = 0;
-    limit.rlim_max = 0;
-    setrlimit(RLIMIT_NPROC, &limit);
+    rlimit resourceLimit{};
+    resourceLimit.rlim_cur = 8;
+    resourceLimit.rlim_max = 8;
+    setrlimit(RLIMIT_NOFILE, &resourceLimit);
+    resourceLimit.rlim_cur = 0;
+    resourceLimit.rlim_max = 0;
+    setrlimit(RLIMIT_NPROC, &resourceLimit);
 }
 #endif
 
-static void govern(lua_State *state, const lua_Debug *debug) {
-    (void)debug;
+static void govern(lua_State* state, const lua_Debug* debugInfo) {
+    (void)debugInfo;
     lua_sethook(state, reinterpret_cast<lua_Hook>(govern), LUA_MASKCOUNT, 1);
     luaL_error(state, "sandbox: cpu budget exceeded");
 }
@@ -63,20 +66,8 @@ Sandbox::Sandbox() {
 
         luaL_openlibs(state);
 
-        lua_getglobal(state, "package");
-        if (lua_istable(state, -1)) {
-            lua_getfield(state, -1, "preload");
-            if (lua_istable(state, -1)) {
-
-                lua_pushcfunction(state, luaopen_ecs);
-                lua_setfield(state, -2, "voxyl.ecs");
-
-                lua_pushcfunction(state, luaopen_math);
-                lua_setfield(state, -2, "voxyl.math");
-            }
-            lua_pop(state, 1);
-        }
-        lua_pop(state, 1);
+        register_ecs_bindings(state);
+        register_math_bindings(state);
     }
     catch (const std::exception& exception) {
         std::fprintf(stderr, "sandbox initialization error: %s\n", exception.what());
@@ -104,35 +95,35 @@ Sandbox::~Sandbox() {
     delete memory;
 }
 
-int Sandbox::run(const char *path) const {
+int Sandbox::run(const char* filePath) const {
     try {
-        lua_State *context = state;
-        if (!context) {
+        lua_State* contextState = state;
+        if (!contextState) {
             std::fprintf(stderr, "sandbox error: Lua state is uninitialized\n");
             return 0;
         }
 
-        lua_State *thread = lua_newthread(context);
-        if (!thread) {
+        lua_State* threadState = lua_newthread(contextState);
+        if (!threadState) {
             std::fprintf(stderr, "sandbox error: Failed to create Lua coroutine thread\n");
             return 0;
         }
 
-        lua_sethook(thread, reinterpret_cast<lua_Hook>(govern), LUA_MASKCOUNT, INSTRUCTIONS);
+        lua_sethook(threadState, reinterpret_cast<lua_Hook>(govern), LUA_MASKCOUNT, INSTRUCTIONS);
 
-        if (luaL_loadfile(thread, path) != LUA_OK) {
-            std::fprintf(stderr, "sandbox error: %s\n", lua_tostring(thread, -1));
-            lua_pop(context, 1);
+        if (luaL_loadfile(threadState, filePath) != LUA_OK) {
+            std::fprintf(stderr, "sandbox error: %s\n", lua_tostring(threadState, -1));
+            lua_pop(contextState, 1);
             return 0;
         }
 
-        if (lua_pcall(thread, 0, 0, 0) != LUA_OK) {
-            std::fprintf(stderr, "runtime error: %s\n", lua_tostring(thread, -1));
-            lua_pop(context, 1);
+        if (lua_pcall(threadState, 0, 0, 0) != LUA_OK) {
+            std::fprintf(stderr, "runtime error: %s\n", lua_tostring(threadState, -1));
+            lua_pop(contextState, 1);
             return 0;
         }
 
-        lua_pop(context, 1);
+        lua_pop(contextState, 1);
         return 1;
     }
     catch (const std::exception& exception) {

@@ -1,61 +1,48 @@
-#ifndef VECTOR4_HPP
-#define VECTOR4_HPP
+#pragma once
 
 #include "vector3.hpp"
-#include "scalar.hpp"
-#include <limits>
 #include <ostream>
 
-struct Vector4 : Vector3 {
-    float w;
+namespace voxyl::math {
+    
+    class alignas(16) Vector4 {
+        public:
+        float x;
+        float y;
+        float z;
+        float w;
 
-    Vector4();
-    Vector4(float x, float y, float z, float w);
-    explicit Vector4(const Vector3 &vector, float w = 1.0f);
+        static const Vector4 ZERO;
+        static const Vector4 ONE;
 
-    Vector4 operator+(const Vector4 &vector) const;
-    Vector4 &operator+=(const Vector4 &vector);
+        Vector4();
+        Vector4(float x, float y, float z, float w);
+        Vector4(const Vector3& vector, float w);
 
-    Vector4 operator-(const Vector4 &vector) const;
-    Vector4 &operator-=(const Vector4 &vector);
+        [[nodiscard]] Vector4 operator+(const Vector4& vector) const;
+        Vector4& operator+=(const Vector4& vector);
+        [[nodiscard]] Vector4 operator-(const Vector4& vector) const;
+        Vector4& operator-=(const Vector4& vector);
+        [[nodiscard]] Vector4 operator*(float scalar) const;
+        Vector4& operator*=(float scalar);
+        [[nodiscard]] Vector4 operator/(float scalar) const;
+        Vector4& operator/=(float scalar);
+        [[nodiscard]] Vector4 operator-() const;
 
-    Vector4 operator*(float scalar) const;
-    Vector4 &operator*=(float scalar);
+        [[nodiscard]] float dot(const Vector4& vector) const;
+        [[nodiscard]] float length() const;
+        [[nodiscard]] float squared() const;
+        [[nodiscard]] Vector4 normalized() const;
+        [[nodiscard]] Vector4 absolute() const;
+        [[nodiscard]] Vector4 clamped(const Vector4& minimum, const Vector4& maximum) const;
+        [[nodiscard]] bool approximately(const Vector4& vector, float epsilon = 0.0001f) const;
 
-    Vector4 operator*(const Vector4 &vector) const;
-    Vector4 &operator*=(const Vector4 &vector);
+        static Vector4 minimum(const Vector4& alpha, const Vector4& beta);
+        static Vector4 maximum(const Vector4& alpha, const Vector4& beta);
 
-    friend Vector4 operator*(float scalar, const Vector4 &vector);
+        bool operator==(const Vector4& vector) const = default;
+    };
 
-    Vector4 operator/(float scalar) const;
-    Vector4 &operator/=(float scalar);
+    std::ostream& operator<<(std::ostream& os, const Vector4& vector);
 
-    Vector4 operator-() const;
-
-    bool operator==(const Vector4 &vector) const;
-    bool operator!=(const Vector4 &vector) const;
-
-    [[nodiscard]] Scalar length() const;
-    [[nodiscard]] Scalar dot(const Vector4 &vector) const;
-    [[nodiscard]] Scalar distance(const Vector4 &vector) const;
-
-    [[nodiscard]] Vector4 normalized() const;
-    [[nodiscard]] Vector4 interpolate(const Vector4 &vector, float factor) const;
-    [[nodiscard]] Vector4 absolute() const;
-    [[nodiscard]] Vector4 clamped(const Vector4 &minimum, const Vector4 &maximum) const;
-
-    [[nodiscard]] Scalar dominant() const;
-    [[nodiscard]] Scalar recessive() const;
-
-    [[nodiscard]] bool approximately(const Vector4 &vector, float epsilon = std::numeric_limits<float>::epsilon()) const;
-
-    static Vector4 minimum(const Vector4 &alpha, const Vector4 &beta);
-    static Vector4 maximum(const Vector4 &alpha, const Vector4 &beta);
-
-    friend std::ostream &operator<<(std::ostream &os, const Vector4 &vector);
-
-    static const Vector4 ZERO;
-    static const Vector4 ONE;
-};
-
-#endif
+}
