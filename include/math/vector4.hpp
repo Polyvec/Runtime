@@ -4,7 +4,7 @@
 #include <ostream>
 
 namespace voxyl::math {
-    
+
     class alignas(16) Vector4 {
         public:
         float x;
@@ -42,6 +42,8 @@ namespace voxyl::math {
 
         bool operator==(const Vector4& vector) const = default;
     };
+
+    [[nodiscard]] Vector4 operator*(float scalar, const Vector4& vector);
 
     std::ostream& operator<<(std::ostream& os, const Vector4& vector);
 

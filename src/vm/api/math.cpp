@@ -1,179 +1,227 @@
 #include "../../../include/vm/api/math.hpp"
-#include <lua.hpp>
-#include <LuaBridge/LuaBridge.h>
-#include <string>
-
+#include "../../../include/math/vector2.hpp"
 #include "../../../include/math/vector3.hpp"
 #include "../../../include/math/vector4.hpp"
 #include "../../../include/math/quaternion.hpp"
+#include "../../../include/math/matrix3.hpp"
 #include "../../../include/math/matrix4.hpp"
 #include "../../../include/math/transform.hpp"
+#include <sol/sol.hpp>
+#include <string>
 
 using namespace voxyl::math;
 
-template <typename Type>
-void metamethod(lua_State* state, lua_CFunction function) {
-    (void)luabridge::Stack<Type>::push(state, Type());
-    if (lua_getmetatable(state, -1)) {
-        lua_pushcfunction(state, function);
-        lua_setfield(state, -2, "__mul");
-        lua_pop(state, 1);
-    }
-    lua_pop(state, 1);
-}
-
 void register_math_bindings(lua_State* state) {
-    luabridge::getGlobalNamespace(state)
-        .beginNamespace("math")
+    sol::state_view view(state);
 
-            .beginClass<Vector3>("vector3")
-                .addConstructor<void()>()
-                .addConstructor<void(float, float, float)>()
-                .addProperty("x", &Vector3::x)
-                .addProperty("y", &Vector3::y)
-                .addProperty("z", &Vector3::z)
-                .addFunction("length", &Vector3::length)
-                .addFunction("normalized", &Vector3::normalized)
-                .addFunction("cross", &Vector3::cross)
-                .addFunction("__add", [](const Vector3& alpha, const Vector3& beta) {
-                    return alpha + beta;
-                })
-                .addFunction("__sub", [](const Vector3& alpha, const Vector3& beta) {
-                    return alpha - beta;
-                })
-                .addFunction("__tostring", [](const Vector3& alpha) {
-                    char output[128];
-                    std::snprintf(output, sizeof(output), "Vector3(%f, %f, %f)", static_cast<double>(alpha.x), static_cast<double>(alpha.y), static_cast<double>(alpha.z));
-                    return std::string(output);
-                })
-            .endClass()
+    sol::table math = view["math"];
 
-            .beginClass<Quaternion>("quaternion")
-                .addConstructor<void()>()
-                .addConstructor<void(float, float, float, float)>()
-                .addProperty("x", &Quaternion::x)
-                .addProperty("y", &Quaternion::y)
-                .addProperty("z", &Quaternion::z)
-                .addProperty("w", &Quaternion::w)
-                .addFunction("euler", static_cast<Vector3 (Quaternion::*)() const>(&Quaternion::euler))
-            .endClass()
+    math.new_usertype<Vector2>("vector2",
+        sol::constructors<Vector2(), Vector2(float, float)>(),
+        "x", sol::property([](const Vector2& self) { return self.x; }, [](Vector2& self, float value) { self.x = value; }),
+        "y", sol::property([](const Vector2& self) { return self.y; }, [](Vector2& self, float value) { self.y = value; }),
+        "length", &Vector2::length,
+        "squared", &Vector2::squared,
+        "normalized", &Vector2::normalized,
+        "absolute", &Vector2::absolute,
+        "perpendicular", &Vector2::perpendicular,
+        "dot", &Vector2::dot,
+        "cross", &Vector2::cross,
+        "reflect", &Vector2::reflect,
+        "project", &Vector2::project,
+        "clamped", &Vector2::clamped,
+        "approximately", &Vector2::approximately,
+        "minimum", &Vector2::minimum,
+        "maximum", &Vector2::maximum,
+        sol::meta_function::addition, [](const Vector2& alpha, const Vector2& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Vector2& alpha, const Vector2& beta) { return alpha - beta; },
+        sol::meta_function::division, [](const Vector2& alpha, float scalar) { return alpha / scalar; },
+        sol::meta_function::unary_minus, [](const Vector2& alpha) { return -alpha; },
+        sol::meta_function::equal_to, [](const Vector2& alpha, const Vector2& beta) { return alpha == beta; },
+        sol::meta_function::multiplication, sol::overload(
+            [](const Vector2& alpha, float scalar) { return alpha * scalar; },
+            [](float scalar, const Vector2& beta) { return beta * scalar; }
+        ),
+        sol::meta_function::to_string, [](const Vector2& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Vector2(%f, %f)", static_cast<double>(alpha.x), static_cast<double>(alpha.y));
+            return std::string(buffer);
+        }
+    );
 
-            .beginClass<Vector4>("vector4")
-                .addConstructor<void()>()
-                .addConstructor<void(float, float, float, float)>()
-                .addProperty("x", &Vector4::x)
-                .addProperty("y", &Vector4::y)
-                .addProperty("z", &Vector4::z)
-                .addProperty("w", &Vector4::w)
-                .addFunction("length", &Vector4::length)
-                .addFunction("normalized", &Vector4::normalized)
-                .addFunction("__add", [](const Vector4& alpha, const Vector4& beta) {
-                    return alpha + beta;
-                })
-                .addFunction("__sub", [](const Vector4& alpha, const Vector4& beta) {
-                    return alpha - beta;
-                })
-                .addFunction("__tostring", [](const Vector4& alpha) {
-                    char output[128];
-                    std::snprintf(output, sizeof(output), "Vector4(%f, %f, %f, %f)", static_cast<double>(alpha.x), static_cast<double>(alpha.y), static_cast<double>(alpha.z), static_cast<double>(alpha.w));
-                    return std::string(output);
-                })
-            .endClass()
+    math.new_usertype<Vector3>("vector3",
+        sol::constructors<Vector3(), Vector3(float, float, float), Vector3(const Vector2&, float)>(),
+        "x", sol::property([](const Vector3& self) { return self.x; }, [](Vector3& self, float value) { self.x = value; }),
+        "y", sol::property([](const Vector3& self) { return self.y; }, [](Vector3& self, float value) { self.y = value; }),
+        "z", sol::property([](const Vector3& self) { return self.z; }, [](Vector3& self, float value) { self.z = value; }),
+        "length", &Vector3::length,
+        "squared", &Vector3::squared,
+        "normalized", &Vector3::normalized,
+        "absolute", &Vector3::absolute,
+        "dot", &Vector3::dot,
+        "cross", &Vector3::cross,
+        "reflect", &Vector3::reflect,
+        "project", &Vector3::project,
+        "clamped", &Vector3::clamped,
+        "interpolate", &Vector3::interpolate,
+        "approximately", &Vector3::approximately,
+        "minimum", &Vector3::minimum,
+        "maximum", &Vector3::maximum,
+        sol::meta_function::addition, [](const Vector3& alpha, const Vector3& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Vector3& alpha, const Vector3& beta) { return alpha - beta; },
+        sol::meta_function::division, [](const Vector3& alpha, float scalar) { return alpha / scalar; },
+        sol::meta_function::unary_minus, [](const Vector3& alpha) { return -alpha; },
+        sol::meta_function::equal_to, [](const Vector3& alpha, const Vector3& beta) { return alpha == beta; },
+        sol::meta_function::multiplication, sol::overload(
+            [](const Vector3& alpha, float scalar) { return alpha * scalar; },
+            [](float scalar, const Vector3& beta) { return beta * scalar; },
+            [](const Vector3& alpha, const Vector3& beta) { return alpha * beta; }
+        ),
+        sol::meta_function::to_string, [](const Vector3& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Vector3(%f, %f, %f)", static_cast<double>(alpha.z), static_cast<double>(alpha.y), static_cast<double>(alpha.z));
+            return std::string(buffer);
+        }
+    );
 
-            .beginClass<Matrix4>("matrix4")
-                .addConstructor<void()>()
-                .addConstructor<void(float)>()
-                .addFunction("transposed", &Matrix4::transposed)
-                .addFunction("inverted", &Matrix4::inverted)
-                .addFunction("__add", [](const Matrix4& alpha, const Matrix4& beta) {
-                    return alpha + beta;
-                })
-                .addFunction("__sub", [](const Matrix4& alpha, const Matrix4& beta) {
-                    return alpha - beta;
-                })
-                .addFunction("__tostring", [](const Matrix4& alpha) {
-                    char output[256];
-                    std::snprintf(output, sizeof(output), "Matrix4([[ %f, %f, %f, %f ], ...])",
-                                 static_cast<double>(alpha(0,0)), static_cast<double>(alpha(0,1)), static_cast<double>(alpha(0,2)), static_cast<double>(alpha(0,3)));
-                    return std::string(output);
-                })
-            .endClass()
+    math.new_usertype<Vector4>("vector4",
+        sol::constructors<Vector4(), Vector4(float, float, float, float), Vector4(const Vector3&, float)>(),
+        "x", sol::property([](const Vector4& self) { return self.x; }, [](Vector4& self, float value) { self.x = value; }),
+        "y", sol::property([](const Vector4& self) { return self.y; }, [](Vector4& self, float value) { self.y = value; }),
+        "z", sol::property([](const Vector4& self) { return self.z; }, [](Vector4& self, float value) { self.z = value; }),
+        "w", sol::property([](const Vector4& self) { return self.w; }, [](Vector4& self, float value) { self.w = value; }),
+        "length", &Vector4::length,
+        "squared", &Vector4::squared,
+        "normalized", &Vector4::normalized,
+        "absolute", &Vector4::absolute,
+        "dot", &Vector4::dot,
+        "clamped", &Vector4::clamped,
+        "approximately", &Vector4::approximately,
+        "minimum", &Vector4::minimum,
+        "maximum", &Vector4::maximum,
+        sol::meta_function::addition, [](const Vector4& alpha, const Vector4& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Vector4& alpha, const Vector4& beta) { return alpha - beta; },
+        sol::meta_function::unary_minus, [](const Vector4& alpha) { return -alpha; },
+        sol::meta_function::equal_to, [](const Vector4& alpha, const Vector4& beta) { return alpha == beta; },
+        sol::meta_function::multiplication, sol::overload(
+            [](const Vector4& alpha, float scalar) { return alpha * scalar; },
+            [](float scalar, const Vector4& beta) { return beta * scalar; }
+        ),
+        sol::meta_function::to_string, [](const Vector4& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Vector4(%f, %f, %f, %f)", static_cast<double>(alpha.x), static_cast<double>(alpha.y), static_cast<double>(alpha.z), static_cast<double>(alpha.w));
+            return std::string(buffer);
+        }
+    );
 
-            .beginClass<Transform>("transform")
-                .addConstructor<void()>()
-                .addConstructor<void(const Vector3&, const Quaternion&, const Vector3&)>()
-                .addProperty("translation", &Transform::translation)
-                .addProperty("rotation", &Transform::rotation)
-                .addProperty("scale", &Transform::scale)
-                .addFunction("matrix", &Transform::matrix)
-                .addFunction("__mul", [](const Transform& alpha, const Transform& beta) {
-                    return alpha * beta;
-                })
-                .addFunction("__tostring", [](const Transform& alpha) {
-                    (void)alpha;
-                    return std::string("Transform()");
-                })
-            .endClass()
+    math.new_usertype<Quaternion>("quaternion",
+        sol::constructors<Quaternion(), Quaternion(float, float, float, float)>(),
+        "x", sol::property([](const Quaternion& self) { return self.x; }, [](Quaternion& self, float value) { self.x = value; }),
+        "y", sol::property([](const Quaternion& self) { return self.y; }, [](Quaternion& self, float value) { self.y = value; }),
+        "z", sol::property([](const Quaternion& self) { return self.z; }, [](Quaternion& self, float value) { self.z = value; }),
+        "w", sol::property([](const Quaternion& self) { return self.w; }, [](Quaternion& self, float value) { self.w = value; }),
+        "length", [](const Quaternion& quaternion) { return static_cast<float>(quaternion.length()); },
+        "dot", [](const Quaternion& alpha, const Quaternion& beta) { return static_cast<float>(alpha.dot(beta)); },
+        "normalized", &Quaternion::normalized,
+        "conjugate", &Quaternion::conjugate,
+        "inverse", &Quaternion::inverse,
+        "interpolate", &Quaternion::interpolate,
+        "euler", static_cast<Vector3 (Quaternion::*)() const>(&Quaternion::euler),
+        "between", &Quaternion::between,
+        "look", &Quaternion::look,
+        "around", &Quaternion::around,
+        sol::meta_function::addition, [](const Quaternion& alpha, const Quaternion& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Quaternion& alpha, const Quaternion& beta) { return alpha - beta; },
+        sol::meta_function::equal_to, [](const Quaternion& alpha, const Quaternion& beta) { return alpha == beta; },
+        sol::meta_function::multiplication, sol::overload(
+            [](const Quaternion& alpha, float scalar) { return alpha * scalar; },
+            [](float scalar, const Quaternion& beta) { return beta * scalar; },
+            [](const Quaternion& alpha, const Quaternion& beta) { return alpha * beta; }
+        ),
+        sol::meta_function::to_string, [](const Quaternion& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Quaternion(%f, %f, %f, %f)", static_cast<double>(alpha.x), static_cast<double>(alpha.y), static_cast<double>(alpha.z), static_cast<double>(alpha.w));
+            return std::string(buffer);
+        }
+    );
 
-        .endNamespace();
+    math.new_usertype<Matrix3>("matrix3",
+        sol::constructors<Matrix3(), Matrix3(float)>(),
+        "transposed", &Matrix3::transposed,
+        "determinant", [](const Matrix3& matrix) { return static_cast<float>(matrix.determinant()); },
+        "inverted", &Matrix3::inverted,
+        "approximately", &Matrix3::approximately,
+        "translation", &Matrix3::translation,
+        "rotation", [](const Matrix3& matrix) { return static_cast<float>(matrix.rotation()); },
+        "scale", static_cast<Vector2 (Matrix3::*)() const>(&Matrix3::scale),
+        "identity", []() { return Matrix3::IDENTITY; },
+        "translate", &Matrix3::translate,
+        "rotate", &Matrix3::rotate,
+        "factor", static_cast<Matrix3 (*)(const Vector2&)>(&Matrix3::scale),
+        sol::meta_function::addition, [](const Matrix3& alpha, const Matrix3& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Matrix3& alpha, const Matrix3& beta) { return alpha - beta; },
+        sol::meta_function::multiplication, [](const Matrix3& alpha, const Matrix3& beta) { return alpha * beta; },
+        sol::meta_function::equal_to, [](const Matrix3& alpha, const Matrix3& beta) { return alpha == beta; },
+        sol::meta_function::to_string, [](const Matrix3& matrix) {
+            char buffer[256];
+            std::snprintf(buffer, sizeof(buffer),
+                "Matrix3([[ %f, %f, %f ], [ %f, %f, %f ], [ %f, %f, %f ]])",
+                static_cast<double>(matrix(0,0)), static_cast<double>(matrix(0,1)), static_cast<double>(matrix(0,2)),
+                static_cast<double>(matrix(1,0)), static_cast<double>(matrix(1,1)), static_cast<double>(matrix(1,2)),
+                static_cast<double>(matrix(2,0)), static_cast<double>(matrix(2,1)), static_cast<double>(matrix(2,2)));
+            return std::string(buffer);
+        }
+    );
 
-    metamethod<Vector3>(state, [](lua_State* L) -> int {
-        if (luabridge::Stack<Vector3>::isInstance(L, 1) && luabridge::Stack<Vector3>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Vector3>::push(L, luabridge::Stack<Vector3>::get(L, 1).value() * luabridge::Stack<Vector3>::get(L, 2).value());
-            return 1;
+    math.new_usertype<Matrix4>("matrix4",
+        sol::constructors<Matrix4(), Matrix4(float)>(),
+        "transposed", &Matrix4::transposed,
+        "inverted", &Matrix4::inverted,
+        "decompose", &Matrix4::decompose,
+        "identity", []() { return Matrix4::IDENTITY; },
+        "translate", &Matrix4::translate,
+        "rotate", &Matrix4::rotate,
+        "scale", &Matrix4::scale,
+        "orthographic", &Matrix4::orthographic,
+        "perspective", &Matrix4::perspective,
+        "look", &Matrix4::look,
+        sol::meta_function::addition, [](const Matrix4& alpha, const Matrix4& beta) { return alpha + beta; },
+        sol::meta_function::subtraction, [](const Matrix4& alpha, const Matrix4& beta) { return alpha - beta; },
+        sol::meta_function::multiplication, [](const Matrix4& alpha, const Matrix4& beta) { return alpha * beta; },
+        sol::meta_function::equal_to, [](const Matrix4& alpha, const Matrix4& beta) {
+            for (int row = 0; row < 4; row++)
+                for (int column = 0; column < 4; column++)
+                    if (alpha(row, column) != beta(row, column)) return false;
+            return true;
+        },
+        sol::meta_function::to_string, [](const Matrix4& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Matrix4([[ %f, %f, %f, %f ], ...])",
+                static_cast<double>(alpha(0,0)), static_cast<double>(alpha(0,1)), static_cast<double>(alpha(0,2)), static_cast<double>(alpha(0,3)));
+            return std::string(buffer);
         }
-        if (luabridge::Stack<Vector3>::isInstance(L, 1) && lua_isnumber(L, 2)) {
-            (void)luabridge::Stack<Vector3>::push(L, luabridge::Stack<Vector3>::get(L, 1).value() * static_cast<float>(lua_tonumber(L, 2)));
-            return 1;
-        }
-        if (lua_isnumber(L, 1) && luabridge::Stack<Vector3>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Vector3>::push(L, luabridge::Stack<Vector3>::get(L, 2).value() * static_cast<float>(lua_tonumber(L, 1)));
-            return 1;
-        }
-        return luaL_error(L, "Invalid operands for Vector3 multiplication");
-    });
+    );
 
-    metamethod<Quaternion>(state, [](lua_State* L) -> int {
-        if (luabridge::Stack<Quaternion>::isInstance(L, 1) && luabridge::Stack<Quaternion>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Quaternion>::push(L, luabridge::Stack<Quaternion>::get(L, 1).value() * luabridge::Stack<Quaternion>::get(L, 2).value());
-            return 1;
+    math.new_usertype<Transform>("transform",
+        sol::constructors<Transform(), Transform(const Vector3&, const Quaternion&, const Vector3&)>(),
+        "translation", sol::property([](const Transform& self) { return self.translation; }, [](Transform& self, const Vector3& value) { self.translation = value; }),
+        "rotation", sol::property([](const Transform& self) { return self.rotation; }, [](Transform& self, const Quaternion& value) { self.rotation = value; }),
+        "scale", sol::property([](const Transform& self) { return self.scale; }, [](Transform& self, const Vector3& value) { self.scale = value; }),
+        "matrix", &Transform::matrix,
+        "forward", &Transform::forward,
+        "right", &Transform::right,
+        "up", &Transform::up,
+        "inversed", &Transform::inversed,
+        "interpolate", &Transform::interpolate,
+        "point", &Transform::point,
+        "direction", &Transform::direction,
+        "approximately", &Transform::approximately,
+        "from", &Transform::from,
+        sol::meta_function::equal_to, [](const Transform& alpha, const Transform& beta) { return alpha == beta; },
+        sol::meta_function::to_string, [](const Transform& alpha) {
+            char buffer[128];
+            std::snprintf(buffer, sizeof(buffer), "Transform(translation=(%f, %f, %f))", static_cast<double>(alpha.translation.x), static_cast<double>(alpha.translation.y), static_cast<double>(alpha.translation.z));
+            return std::string(buffer);
         }
-        if (luabridge::Stack<Quaternion>::isInstance(L, 1) && luabridge::Stack<Vector3>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Vector3>::push(L, luabridge::Stack<Quaternion>::get(L, 1).value() * luabridge::Stack<Vector3>::get(L, 2).value());
-            return 1;
-        }
-        if (luabridge::Stack<Quaternion>::isInstance(L, 1) && lua_isnumber(L, 2)) {
-            (void)luabridge::Stack<Quaternion>::push(L, luabridge::Stack<Quaternion>::get(L, 1).value() * static_cast<float>(lua_tonumber(L, 2)));
-            return 1;
-        }
-        if (lua_isnumber(L, 1) && luabridge::Stack<Quaternion>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Quaternion>::push(L, luabridge::Stack<Quaternion>::get(L, 2).value() * static_cast<float>(lua_tonumber(L, 1)));
-            return 1;
-        }
-        return luaL_error(L, "Invalid operands for Quaternion multiplication");
-    });
-
-    metamethod<Vector4>(state, [](lua_State* L) -> int {
-        if (luabridge::Stack<Vector4>::isInstance(L, 1) && lua_isnumber(L, 2)) {
-            (void)luabridge::Stack<Vector4>::push(L, luabridge::Stack<Vector4>::get(L, 1).value() * static_cast<float>(lua_tonumber(L, 2)));
-            return 1;
-        }
-        if (lua_isnumber(L, 1) && luabridge::Stack<Vector4>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Vector4>::push(L, luabridge::Stack<Vector4>::get(L, 2).value() * static_cast<float>(lua_tonumber(L, 1)));
-            return 1;
-        }
-        return luaL_error(L, "Invalid operands for Vector4 multiplication");
-    });
-
-    metamethod<Matrix4>(state, [](lua_State* L) -> int {
-        if (luabridge::Stack<Matrix4>::isInstance(L, 1) && luabridge::Stack<Matrix4>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Matrix4>::push(L, luabridge::Stack<Matrix4>::get(L, 1).value() * luabridge::Stack<Matrix4>::get(L, 2).value());
-            return 1;
-        }
-        if (luabridge::Stack<Matrix4>::isInstance(L, 1) && luabridge::Stack<Vector4>::isInstance(L, 2)) {
-            (void)luabridge::Stack<Vector4>::push(L, luabridge::Stack<Matrix4>::get(L, 1).value() * luabridge::Stack<Vector4>::get(L, 2).value());
-            return 1;
-        }
-        return luaL_error(L, "Invalid operands for Matrix4 multiplication");
-    });
+    );
 }

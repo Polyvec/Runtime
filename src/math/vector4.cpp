@@ -16,6 +16,7 @@ namespace voxyl::math {
     Vector4& Vector4::operator-=(const Vector4& vector) { x -= vector.x; y -= vector.y; z -= vector.z; w -= vector.w; return *this; }
     Vector4 Vector4::operator*(float scalar) const { return Vector4(x * scalar, y * scalar, z * scalar, w * scalar); }
     Vector4& Vector4::operator*=(float scalar) { x *= scalar; y *= scalar; z *= scalar; w *= scalar; return *this; }
+    Vector4 operator*(float scalar, const Vector4& vector) { return vector * scalar; }
     Vector4 Vector4::operator/(float scalar) const { assert(scalar != 0.0f); return Vector4(x / scalar, y / scalar, z / scalar, w / scalar); }
     Vector4& Vector4::operator/=(float scalar) { assert(scalar != 0.0f); x /= scalar; y /= scalar; z /= scalar; w /= scalar; return *this; }
     Vector4 Vector4::operator-() const { return Vector4(-x, -y, -z, -w); }

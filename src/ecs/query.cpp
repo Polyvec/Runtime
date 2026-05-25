@@ -4,47 +4,38 @@
 
 namespace voxyl::ecs {
 
-    Query::Query(const std::vector<std::unique_ptr<Archetype>>& archetypes, Gpu* device) noexcept
-        : m_archetypes(archetypes), m_device(device) {}
+    Query::Query(const std::vector<std::unique_ptr<Archetype>>& list) noexcept
+        : archetypes(list) {}
 
     Query& Query::with(const std::uint32_t target) {
-        m_require.set(target);
+        require.set(target);
+        order.push_back(target);
         return *this;
     }
 
     Query& Query::without(const std::uint32_t target) {
-        m_reject.set(target);
+        reject.set(target);
         return *this;
     }
 
     Query& Query::any(const std::vector<std::uint32_t>& targets) {
         for (const std::uint32_t target : targets) {
-            m_allow.set(target);
+            allow.set(target);
         }
         return *this;
     }
 
     bool Query::has(const std::uint32_t target) const noexcept {
-        return m_require.test(target);
+        return require.test(target);
     }
 
     void Query::run(const Callback& callback, const std::vector<std::uint32_t>& targets) const {
-        if (m_device) {
-            if (gpu(targets)) {
-                return;
-            }
-        }
-
-        cpu(callback, targets);
-    }
-
-    void Query::cpu(const Callback& callback, const std::vector<std::uint32_t>& targets) const {
         std::vector<std::future<void>> tasks;
 
-        for (const auto& archetype : m_archetypes) {
-            if ((archetype->mask & m_require) != m_require) continue;
-            if ((archetype->mask & m_reject).any()) continue;
-            if (m_allow.any() && (archetype->mask & m_allow).none()) continue;
+        for (const auto& archetype : archetypes) {
+            if ((archetype->mask & require) != require) continue;
+            if ((archetype->mask & reject).any()) continue;
+            if (allow.any() && (archetype->mask & allow).none()) continue;
 
             tasks.push_back(std::async(std::launch::async, [pointer = archetype.get(), callback, targets]() {
                 std::shared_lock lock(pointer->mutex);
@@ -72,9 +63,44 @@ namespace voxyl::ecs {
         }
     }
 
-    bool Query::gpu(const std::vector<std::uint32_t>& targets) const {
-        (void)targets;
-        return false;
+    void Query::dispatch(VkCommandBuffer cmd, VkPipelineLayout layout, VkPipeline pipeline, const std::vector<std::uint32_t>& targets) const {
+        vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_COMPUTE, pipeline);
+
+        for (const auto& archetype : archetypes) {
+            if ((archetype->mask & require) != require) continue;
+            if ((archetype->mask & reject).any()) continue;
+            if (allow.any() && (archetype->mask & allow).none()) continue;
+
+            std::shared_lock lock(archetype->mutex);
+            std::uint32_t count = static_cast<std::uint32_t>(archetype->entities.size());
+            if (count == 0) continue;
+
+            std::vector<VkDescriptorBufferInfo> infos;
+            infos.reserve(targets.size());
+
+            for (const std::uint32_t target : targets) {
+                auto item = archetype->mapping.find(target);
+                if (item == archetype->mapping.end()) break;
+
+                VkBuffer buffer = archetype->buffers[item->second];
+                infos.push_back(VkDescriptorBufferInfo{buffer, 0, VK_WHOLE_SIZE});
+            }
+
+            if (infos.size() != targets.size()) continue;
+
+            VkWriteDescriptorSet write{};
+            write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            write.dstSet = nullptr;
+            write.dstBinding = 0;
+            write.descriptorCount = static_cast<std::uint32_t>(infos.size());
+            write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+            write.pBufferInfo = infos.data();
+
+            vkCmdPushConstants(cmd, layout, VK_SHADER_STAGE_COMPUTE_BIT, 0, sizeof(std::uint32_t), &count);
+
+            std::uint32_t groups = (count + 63) / 64;
+            vkCmdDispatch(cmd, groups, 1, 1);
+        }
     }
 
 }

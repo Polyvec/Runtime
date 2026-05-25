@@ -25,8 +25,9 @@ endif()
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
     execute_process(COMMAND git clone --branch v4.3-stable https://github.com/warmcat/libwebsockets.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
 endif()
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge")
-    execute_process(COMMAND git clone https://github.com/kunitoki/LuaBridge3.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge")
+# Replaced LuaBridge3 with sol3 (sol2 v3)
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3")
+    execute_process(COMMAND git clone --branch v3.3.0 https://github.com/ThePhD/sol2.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3")
 endif()
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/include/luajit-2.1")
@@ -124,8 +125,9 @@ set_target_properties(liblws PROPERTIES
 )
 add_dependencies(liblws lws)
 
-add_library(bridge INTERFACE)
-target_include_directories(bridge INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/bridge/Source")
+# Configured sol3 as an interface library target
+add_library(sol3 INTERFACE)
+target_include_directories(sol3 INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3/include")
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
@@ -151,7 +153,7 @@ target_include_directories(volyx PUBLIC
 )
 
 if(WIN32)
-    target_link_libraries(volyx PUBLIC bridge liblua libuv libenet liblws Vulkan::Vulkan ws2_32 iphlpapi userenv winmm)
+    target_link_libraries(volyx PUBLIC sol3 liblua libuv libenet liblws Vulkan::Vulkan ws2_32 iphlpapi userenv winmm)
 else()
-    target_link_libraries(volyx PUBLIC bridge liblua libuv libenet liblws Vulkan::Vulkan m dl pthread)
+    target_link_libraries(volyx PUBLIC sol3 liblua libuv libenet liblws Vulkan::Vulkan m dl pthread)
 endif()

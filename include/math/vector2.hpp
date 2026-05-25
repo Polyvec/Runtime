@@ -47,6 +47,8 @@ namespace voxyl::math {
         bool operator==(const Vector2& vector) const = default;
     };
 
+    [[nodiscard]] Vector2 operator*(float scalar, const Vector2& vector);
+
     std::ostream& operator<<(std::ostream& os, const Vector2& vector);
 
 }

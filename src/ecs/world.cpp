@@ -3,9 +3,15 @@
 
 namespace voxyl::ecs {
 
-    std::uint32_t World::enroll(const std::size_t size) {
+    std::uint32_t World::component(const std::string& name, const std::size_t size) {
+        auto item = registry.find(name);
+        if (item != registry.end()) {
+            return item->second;
+        }
         sizes.push_back(size);
-        return static_cast<std::uint32_t>(sizes.size() - 1);
+        const std::uint32_t id = static_cast<std::uint32_t>(sizes.size() - 1);
+        registry[name] = id;
+        return id;
     }
 
     Entity World::spawn() {
@@ -27,6 +33,13 @@ namespace voxyl::ecs {
     }
 
     void World::kill(const Entity entity) {
+        if (deferred) {
+            queue.push_back([this, entity]() {
+                this->kill(entity);
+            });
+            return;
+        }
+
         auto [archetype, index] = records[entity];
         if (archetype) {
             const Entity swapped = archetype->remove(index);
@@ -39,6 +52,18 @@ namespace voxyl::ecs {
     }
 
     void* World::attach(const Entity entity, const std::uint32_t target, const void* data) {
+        if (deferred) {
+            std::vector<std::uint8_t> bytes;
+            if (data) {
+                bytes.resize(sizes[target]);
+                std::memcpy(bytes.data(), data, sizes[target]);
+            }
+            queue.push_back([this, entity, target, bytes = std::move(bytes)]() {
+                this->attach(entity, target, bytes.empty() ? nullptr : bytes.data());
+            });
+            return nullptr;
+        }
+
         Mask mask = records[entity].archetype ? records[entity].archetype->mask : Mask();
         mask.set(target);
         migrate(entity, mask);
@@ -50,12 +75,13 @@ namespace voxyl::ecs {
         if (data) {
             std::memcpy(memory, data, sizes[target]);
         }
+
         return memory;
     }
 
     void* World::get(const Entity entity, const std::uint32_t target) {
         auto [archetype, index] = records[entity];
-        if (!archetype || !archetype->mapping.contains(target)) {
+        if (!archetype || !archetype->mask.test(target)) {
             return nullptr;
         }
         const std::size_t column = archetype->mapping[target];
@@ -63,21 +89,44 @@ namespace voxyl::ecs {
     }
 
     bool World::has(const Entity entity, const std::uint32_t target) const {
+        if (entity >= records.size()) return false;
         auto [archetype, index] = records[entity];
         return archetype && archetype->mask.test(target);
     }
 
     void World::detach(const Entity entity, const std::uint32_t target) {
-        if (!records[entity].archetype || !records[entity].archetype->mask.test(target)) {
+        if (deferred) {
+            queue.push_back([this, entity, target]() {
+                this->detach(entity, target);
+            });
             return;
         }
-        Mask mask = records[entity].archetype->mask;
+
+        auto [archetype, index] = records[entity];
+        if (!archetype || !archetype->mask.test(target)) return;
+
+        Mask mask = archetype->mask;
         mask.reset(target);
         migrate(entity, mask);
     }
 
+    void World::batch(const std::function<void()>& flow) {
+        deferred = true;
+        flow();
+        deferred = false;
+
+        for (const auto& operation : queue) {
+            operation();
+        }
+        queue.clear();
+    }
+
     Query World::query() const {
         return Query(archetypes);
+    }
+
+    void World::execute(const Query& query, const Query::Callback& callback) const {
+        query.run(callback, query.tracked());
     }
 
     Archetype* World::locate(const Mask& mask) {
@@ -89,11 +138,13 @@ namespace voxyl::ecs {
 
         auto archetype = std::make_unique<Archetype>();
         archetype->mask = mask;
+
         for (std::size_t index = 0; index < sizes.size(); ++index) {
             if (mask.test(index)) {
                 archetype->mapping[index] = archetype->storage.size();
                 archetype->storage.emplace_back();
                 archetype->sizes.push_back(sizes[index]);
+                archetype->buffers.emplace_back(static_cast<VkBuffer>(VK_NULL_HANDLE));
             }
         }
         archetypes.push_back(std::move(archetype));

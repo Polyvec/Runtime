@@ -19,6 +19,7 @@ namespace voxyl::math {
     Vector2& Vector2::operator-=(const Vector2& vector) { x -= vector.x; y -= vector.y; return *this; }
     Vector2 Vector2::operator*(float scalar) const { return Vector2(x * scalar, y * scalar); }
     Vector2& Vector2::operator*=(float scalar) { x *= scalar; y *= scalar; return *this; }
+    Vector2 operator*(float scalar, const Vector2& vector) { return vector * scalar; }
     Vector2 Vector2::operator/(float scalar) const { assert(scalar != 0.0f); return Vector2(x / scalar, y / scalar); }
     Vector2& Vector2::operator/=(float scalar) { assert(scalar != 0.0f); x /= scalar; y /= scalar; return *this; }
     Vector2 Vector2::operator-() const { return Vector2(-x, -y); }
