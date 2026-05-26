@@ -16,6 +16,7 @@ include(ExternalProject)
 
 find_package(Vulkan REQUIRED)
 
+# --- Manual Git Clones (Keeps vendor/ pristine) ---
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/uv")
     execute_process(COMMAND git clone --branch v1.48.0 https://github.com/libuv/libuv.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/uv")
 endif()
@@ -25,15 +26,17 @@ endif()
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
     execute_process(COMMAND git clone --branch v4.3-stable https://github.com/warmcat/libwebsockets.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws")
 endif()
-# Replaced LuaBridge3 with sol3 (sol2 v3)
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3")
     execute_process(COMMAND git clone --branch v3.3.0 https://github.com/ThePhD/sol2.git "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3")
 endif()
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit/include/luajit-2.1")
 
+# --- External Projects (All tracking artifacts forced into build directory) ---
+
 if(WIN32)
     ExternalProject_Add(luajit
+            PREFIX "${CMAKE_BINARY_DIR}/vendor/luajit"
             GIT_REPOSITORY https://github.com/LuaJIT/LuaJIT.git
             GIT_TAG v2.1
             SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit"
@@ -45,6 +48,7 @@ if(WIN32)
     )
 elseif(APPLE)
     ExternalProject_Add(luajit
+            PREFIX "${CMAKE_BINARY_DIR}/vendor/luajit"
             GIT_REPOSITORY https://github.com/LuaJIT/LuaJIT.git
             GIT_TAG v2.1
             SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit"
@@ -56,6 +60,7 @@ elseif(APPLE)
     )
 else()
     ExternalProject_Add(luajit
+            PREFIX "${CMAKE_BINARY_DIR}/vendor/luajit"
             GIT_REPOSITORY https://github.com/LuaJIT/LuaJIT.git
             GIT_TAG v2.1
             SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/luajit"
@@ -68,18 +73,21 @@ else()
 endif()
 
 ExternalProject_Add(uv
+        PREFIX "${CMAKE_BINARY_DIR}/vendor/uv"
         SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/uv"
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/vendor/uv -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_TESTING=OFF -DLIBUV_BUILD_SHARED=OFF
         BUILD_BYPRODUCTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/uv/lib/libuv.a"
 )
 
 ExternalProject_Add(enet
+        PREFIX "${CMAKE_BINARY_DIR}/vendor/enet"
         SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/enet"
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/vendor/enet -DCMAKE_POSITION_INDEPENDENT_CODE=ON
         BUILD_BYPRODUCTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/enet/lib/libenet.a"
 )
 
 ExternalProject_Add(lws
+        PREFIX "${CMAKE_BINARY_DIR}/vendor/lws"
         SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws"
         CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws
@@ -89,6 +97,8 @@ ExternalProject_Add(lws
         -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         BUILD_BYPRODUCTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lws/lib/libwebsockets.a"
 )
+
+# --- Imported Library Configurations ---
 
 add_library(liblua STATIC IMPORTED GLOBAL)
 if(WIN32)
@@ -125,9 +135,10 @@ set_target_properties(liblws PROPERTIES
 )
 add_dependencies(liblws lws)
 
-# Configured sol3 as an interface library target
 add_library(sol3 INTERFACE)
 target_include_directories(sol3 INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/sol3/include")
+
+# --- Source Compilation Pipeline ---
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"

@@ -44,25 +44,25 @@ cmake_ninja_workdir = /Users/82805/CLionProjects/polyblox/cmake-build-debug/
 #############################################
 # Utility command for luajit
 
-build luajit: phony CMakeFiles/luajit CMakeFiles/luajit-complete luajit-prefix/src/luajit-stamp/luajit-done luajit-prefix/src/luajit-stamp/luajit-build /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a luajit-prefix/src/luajit-stamp/luajit-configure luajit-prefix/src/luajit-stamp/luajit-download luajit-prefix/src/luajit-stamp/luajit-install luajit-prefix/src/luajit-stamp/luajit-mkdir luajit-prefix/src/luajit-stamp/luajit-patch luajit-prefix/src/luajit-stamp/luajit-update
+build luajit: phony CMakeFiles/luajit CMakeFiles/luajit-complete vendor/luajit/src/luajit-stamp/luajit-done vendor/luajit/src/luajit-stamp/luajit-build /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a vendor/luajit/src/luajit-stamp/luajit-configure vendor/luajit/src/luajit-stamp/luajit-download vendor/luajit/src/luajit-stamp/luajit-install vendor/luajit/src/luajit-stamp/luajit-mkdir vendor/luajit/src/luajit-stamp/luajit-patch vendor/luajit/src/luajit-stamp/luajit-update
 
 
 #############################################
 # Utility command for uv
 
-build uv: phony CMakeFiles/uv CMakeFiles/uv-complete uv-prefix/src/uv-stamp/uv-done uv-prefix/src/uv-stamp/uv-build /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a uv-prefix/src/uv-stamp/uv-configure uv-prefix/src/uv-stamp/uv-download uv-prefix/src/uv-stamp/uv-install uv-prefix/src/uv-stamp/uv-mkdir uv-prefix/src/uv-stamp/uv-patch uv-prefix/src/uv-stamp/uv-update
+build uv: phony CMakeFiles/uv CMakeFiles/uv-complete vendor/uv/src/uv-stamp/uv-done vendor/uv/src/uv-stamp/uv-build /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a vendor/uv/src/uv-stamp/uv-configure vendor/uv/src/uv-stamp/uv-download vendor/uv/src/uv-stamp/uv-install vendor/uv/src/uv-stamp/uv-mkdir vendor/uv/src/uv-stamp/uv-patch vendor/uv/src/uv-stamp/uv-update
 
 
 #############################################
 # Utility command for enet
 
-build enet: phony CMakeFiles/enet CMakeFiles/enet-complete enet-prefix/src/enet-stamp/enet-done enet-prefix/src/enet-stamp/enet-build /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a enet-prefix/src/enet-stamp/enet-configure enet-prefix/src/enet-stamp/enet-download enet-prefix/src/enet-stamp/enet-install enet-prefix/src/enet-stamp/enet-mkdir enet-prefix/src/enet-stamp/enet-patch enet-prefix/src/enet-stamp/enet-update
+build enet: phony CMakeFiles/enet CMakeFiles/enet-complete vendor/enet/src/enet-stamp/enet-done vendor/enet/src/enet-stamp/enet-build /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a vendor/enet/src/enet-stamp/enet-configure vendor/enet/src/enet-stamp/enet-download vendor/enet/src/enet-stamp/enet-install vendor/enet/src/enet-stamp/enet-mkdir vendor/enet/src/enet-stamp/enet-patch vendor/enet/src/enet-stamp/enet-update
 
 
 #############################################
 # Utility command for lws
 
-build lws: phony CMakeFiles/lws CMakeFiles/lws-complete lws-prefix/src/lws-stamp/lws-done lws-prefix/src/lws-stamp/lws-build /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a lws-prefix/src/lws-stamp/lws-configure lws-prefix/src/lws-stamp/lws-download lws-prefix/src/lws-stamp/lws-install lws-prefix/src/lws-stamp/lws-mkdir lws-prefix/src/lws-stamp/lws-patch lws-prefix/src/lws-stamp/lws-update
+build lws: phony CMakeFiles/lws CMakeFiles/lws-complete vendor/lws/src/lws-stamp/lws-done vendor/lws/src/lws-stamp/lws-build /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a vendor/lws/src/lws-stamp/lws-configure vendor/lws/src/lws-stamp/lws-download vendor/lws/src/lws-stamp/lws-install vendor/lws/src/lws-stamp/lws-mkdir vendor/lws/src/lws-stamp/lws-patch vendor/lws/src/lws-stamp/lws-update
 
 # =============================================================================
 # Object build statements for EXECUTABLE target volyx
@@ -73,94 +73,103 @@ build lws: phony CMakeFiles/lws CMakeFiles/lws-complete lws-prefix/src/lws-stamp
 
 build cmake_object_order_depends_target_volyx: phony || enet luajit lws uv
 
-build CMakeFiles/volyx.dir/src/ecs/archetype.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/ecs/archetype.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/ecs/archetype.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/ecs/archetype.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/ecs/archetype.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/ecs/archetype.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/ecs
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/ecs
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/ecs/query.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/ecs/query.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/ecs/query.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/ecs/query.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/ecs/query.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/ecs/query.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/ecs
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/ecs
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/ecs/world.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/ecs/world.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/ecs/world.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/ecs/world.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/ecs/world.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/ecs/world.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/ecs
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/ecs
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/buffer.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/buffer.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/matrix3.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/matrix3.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/buffer.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/matrix3.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/context.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/context.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/matrix4.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/matrix4.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/context.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/matrix4.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/descriptor.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/descriptor.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/quaternion.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/quaternion.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/descriptor.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/quaternion.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/mesh.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/mesh.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/scalar.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/scalar.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/mesh.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/scalar.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/pipeline.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/pipeline.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/transform.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/transform.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/pipeline.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/transform.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/stream.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/stream.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/vector2.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/vector2.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/stream.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/vector2.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
-build CMakeFiles/volyx.dir/src/graphics/vertex.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/graphics/vertex.cpp || cmake_object_order_depends_target_volyx
+build CMakeFiles/volyx.dir/src/core/math/vector3.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/vector3.cpp || cmake_object_order_depends_target_volyx
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/graphics/vertex.cpp.o.d
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/vector3.cpp.o.d
   FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/graphics
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
+  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
+
+build CMakeFiles/volyx.dir/src/core/math/vector4.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/core/math/vector4.cpp || cmake_object_order_depends_target_volyx
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles/volyx.dir/src/core/math/vector4.cpp.o.d
+  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
+  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
+  OBJECT_DIR = CMakeFiles/volyx.dir
+  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/core/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
 build CMakeFiles/volyx.dir/src/main.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/main.cpp || cmake_object_order_depends_target_volyx
@@ -170,78 +179,6 @@ build CMakeFiles/volyx.dir/src/main.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /
   INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
   OBJECT_DIR = CMakeFiles/volyx.dir
   OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/matrix3.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/matrix3.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/matrix3.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/matrix4.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/matrix4.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/matrix4.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/quaternion.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/quaternion.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/quaternion.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/scalar.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/scalar.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/scalar.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/transform.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/transform.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/transform.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/vector2.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/vector2.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/vector2.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/vector3.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/vector3.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/vector3.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
-  TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
-
-build CMakeFiles/volyx.dir/src/math/vector4.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/math/vector4.cpp || cmake_object_order_depends_target_volyx
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/volyx.dir/src/math/vector4.cpp.o.d
-  FLAGS = -g -std=gnu++2b -arch arm64 -fPIE -fcolor-diagnostics
-  INCLUDES = -I/Users/82805/CLionProjects/polyblox/include -I/Users/82805/CLionProjects/polyblox/src -I/Users/82805/CLionProjects/polyblox/src/vm/api -I/Users/82805/CLionProjects/polyblox/src/vm/core -I/Users/82805/CLionProjects/polyblox/vendor/sol3/include -isystem /usr/local/include -isystem /Users/82805/CLionProjects/polyblox/vendor/luajit/include/luajit-2.1 -isystem /Users/82805/CLionProjects/polyblox/vendor/uv/include -isystem /Users/82805/CLionProjects/polyblox/vendor/enet/include -isystem /Users/82805/CLionProjects/polyblox/vendor/lws/include
-  OBJECT_DIR = CMakeFiles/volyx.dir
-  OBJECT_FILE_DIR = CMakeFiles/volyx.dir/src/math
   TARGET_SUPPORT_DIR = CMakeFiles/volyx.dir
 
 build CMakeFiles/volyx.dir/src/vm/api/ecs.cpp.o: CXX_COMPILER__volyx_unscanned_Debug /Users/82805/CLionProjects/polyblox/src/vm/api/ecs.cpp || cmake_object_order_depends_target_volyx
@@ -288,7 +225,7 @@ build CMakeFiles/volyx.dir/src/vm/core/sandbox.cpp.o: CXX_COMPILER__volyx_unscan
 #############################################
 # Link the executable /Users/82805/CLionProjects/polyblox/bin/volyx
 
-build /Users/82805/CLionProjects/polyblox/bin/volyx: CXX_EXECUTABLE_LINKER__volyx_Debug CMakeFiles/volyx.dir/src/ecs/archetype.cpp.o CMakeFiles/volyx.dir/src/ecs/query.cpp.o CMakeFiles/volyx.dir/src/ecs/world.cpp.o CMakeFiles/volyx.dir/src/graphics/buffer.cpp.o CMakeFiles/volyx.dir/src/graphics/context.cpp.o CMakeFiles/volyx.dir/src/graphics/descriptor.cpp.o CMakeFiles/volyx.dir/src/graphics/mesh.cpp.o CMakeFiles/volyx.dir/src/graphics/pipeline.cpp.o CMakeFiles/volyx.dir/src/graphics/stream.cpp.o CMakeFiles/volyx.dir/src/graphics/vertex.cpp.o CMakeFiles/volyx.dir/src/main.cpp.o CMakeFiles/volyx.dir/src/math/matrix3.cpp.o CMakeFiles/volyx.dir/src/math/matrix4.cpp.o CMakeFiles/volyx.dir/src/math/quaternion.cpp.o CMakeFiles/volyx.dir/src/math/scalar.cpp.o CMakeFiles/volyx.dir/src/math/transform.cpp.o CMakeFiles/volyx.dir/src/math/vector2.cpp.o CMakeFiles/volyx.dir/src/math/vector3.cpp.o CMakeFiles/volyx.dir/src/math/vector4.cpp.o CMakeFiles/volyx.dir/src/vm/api/ecs.cpp.o CMakeFiles/volyx.dir/src/vm/api/math.cpp.o CMakeFiles/volyx.dir/src/vm/core/allocator.cpp.o CMakeFiles/volyx.dir/src/vm/core/sandbox.cpp.o | /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a /usr/local/lib/libvulkan.dylib || enet luajit lws uv
+build /Users/82805/CLionProjects/polyblox/bin/volyx: CXX_EXECUTABLE_LINKER__volyx_Debug CMakeFiles/volyx.dir/src/core/ecs/archetype.cpp.o CMakeFiles/volyx.dir/src/core/ecs/query.cpp.o CMakeFiles/volyx.dir/src/core/ecs/world.cpp.o CMakeFiles/volyx.dir/src/core/math/matrix3.cpp.o CMakeFiles/volyx.dir/src/core/math/matrix4.cpp.o CMakeFiles/volyx.dir/src/core/math/quaternion.cpp.o CMakeFiles/volyx.dir/src/core/math/scalar.cpp.o CMakeFiles/volyx.dir/src/core/math/transform.cpp.o CMakeFiles/volyx.dir/src/core/math/vector2.cpp.o CMakeFiles/volyx.dir/src/core/math/vector3.cpp.o CMakeFiles/volyx.dir/src/core/math/vector4.cpp.o CMakeFiles/volyx.dir/src/main.cpp.o CMakeFiles/volyx.dir/src/vm/api/ecs.cpp.o CMakeFiles/volyx.dir/src/vm/api/math.cpp.o CMakeFiles/volyx.dir/src/vm/core/allocator.cpp.o CMakeFiles/volyx.dir/src/vm/core/sandbox.cpp.o | /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a /usr/local/lib/libvulkan.dylib || enet luajit lws uv
   CONFIG = Debug
   FLAGS = -g -arch arm64
   LINK_FLAGS = -Wl,-search_paths_first -Wl,-headerpad_max_install_names
@@ -333,71 +270,71 @@ build CMakeFiles/luajit | ${cmake_ninja_workdir}CMakeFiles/luajit: phony CMakeFi
 #############################################
 # Custom command for CMakeFiles/luajit-complete
 
-build CMakeFiles/luajit-complete luajit-prefix/src/luajit-stamp/luajit-done | ${cmake_ninja_workdir}CMakeFiles/luajit-complete ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-done: CUSTOM_COMMAND luajit-prefix/src/luajit-stamp/luajit-install luajit-prefix/src/luajit-stamp/luajit-mkdir luajit-prefix/src/luajit-stamp/luajit-download luajit-prefix/src/luajit-stamp/luajit-update luajit-prefix/src/luajit-stamp/luajit-patch luajit-prefix/src/luajit-stamp/luajit-configure luajit-prefix/src/luajit-stamp/luajit-build luajit-prefix/src/luajit-stamp/luajit-install
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/luajit-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-done
+build CMakeFiles/luajit-complete vendor/luajit/src/luajit-stamp/luajit-done | ${cmake_ninja_workdir}CMakeFiles/luajit-complete ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-done: CUSTOM_COMMAND vendor/luajit/src/luajit-stamp/luajit-install vendor/luajit/src/luajit-stamp/luajit-mkdir vendor/luajit/src/luajit-stamp/luajit-download vendor/luajit/src/luajit-stamp/luajit-update vendor/luajit/src/luajit-stamp/luajit-patch vendor/luajit/src/luajit-stamp/luajit-configure vendor/luajit/src/luajit-stamp/luajit-build vendor/luajit/src/luajit-stamp/luajit-install
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/luajit-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-done
   DESC = Completed 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-build
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-build
 
-build luajit-prefix/src/luajit-stamp/luajit-build /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-build: CUSTOM_COMMAND luajit-prefix/src/luajit-stamp/luajit-configure
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && env MACOSX_DEPLOYMENT_TARGET=11.0 make -j4 PREFIX=/Users/82805/CLionProjects/polyblox/vendor/luajit BUILDMODE=static CFLAGS=-fPIC && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-build
+build vendor/luajit/src/luajit-stamp/luajit-build /Users/82805/CLionProjects/polyblox/vendor/luajit/lib/libluajit-5.1.a | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-build: CUSTOM_COMMAND vendor/luajit/src/luajit-stamp/luajit-configure
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && env MACOSX_DEPLOYMENT_TARGET=11.0 make -j4 PREFIX=/Users/82805/CLionProjects/polyblox/vendor/luajit BUILDMODE=static CFLAGS=-fPIC && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-build
   DESC = Performing build step for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-configure
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-configure
 
-build luajit-prefix/src/luajit-stamp/luajit-configure | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-configure: CUSTOM_COMMAND luajit-prefix/tmp/luajit-cfgcmd.txt luajit-prefix/src/luajit-stamp/luajit-patch
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-configure
+build vendor/luajit/src/luajit-stamp/luajit-configure | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-configure: CUSTOM_COMMAND vendor/luajit/tmp/luajit-cfgcmd.txt vendor/luajit/src/luajit-stamp/luajit-patch
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-configure
   DESC = No configure step for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-download
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-download
 
-build luajit-prefix/src/luajit-stamp/luajit-download | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-download: CUSTOM_COMMAND luajit-prefix/src/luajit-stamp/luajit-gitinfo.txt luajit-prefix/src/luajit-stamp/luajit-mkdir
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/tmp/luajit-gitclone.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-download
+build vendor/luajit/src/luajit-stamp/luajit-download | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-download: CUSTOM_COMMAND vendor/luajit/src/luajit-stamp/luajit-gitinfo.txt vendor/luajit/src/luajit-stamp/luajit-mkdir
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/tmp/luajit-gitclone.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-download
   DESC = Performing download step (git clone) for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-install
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-install
 
-build luajit-prefix/src/luajit-stamp/luajit-install | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-install: CUSTOM_COMMAND luajit-prefix/src/luajit-stamp/luajit-build
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && env MACOSX_DEPLOYMENT_TARGET=11.0 make install PREFIX=/Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-install
+build vendor/luajit/src/luajit-stamp/luajit-install | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-install: CUSTOM_COMMAND vendor/luajit/src/luajit-stamp/luajit-build
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && env MACOSX_DEPLOYMENT_TARGET=11.0 make install PREFIX=/Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-install
   DESC = Performing install step for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-mkdir
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-mkdir
 
-build luajit-prefix/src/luajit-stamp/luajit-mkdir | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-mkdir: CUSTOM_COMMAND
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/tmp/luajit-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-mkdir
+build vendor/luajit/src/luajit-stamp/luajit-mkdir | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-mkdir: CUSTOM_COMMAND
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/tmp/luajit-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-mkdir
   DESC = Creating directories for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-patch
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-patch
 
-build luajit-prefix/src/luajit-stamp/luajit-patch | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-patch: CUSTOM_COMMAND luajit-prefix/src/luajit-stamp/luajit-patch-info.txt luajit-prefix/src/luajit-stamp/luajit-update
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-patch
+build vendor/luajit/src/luajit-stamp/luajit-patch | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-patch: CUSTOM_COMMAND vendor/luajit/src/luajit-stamp/luajit-patch-info.txt vendor/luajit/src/luajit-stamp/luajit-update
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-patch
   DESC = No patch step for 'luajit'
   restat = 1
 
 
 #############################################
-# Custom command for luajit-prefix/src/luajit-stamp/luajit-update
+# Custom command for vendor/luajit/src/luajit-stamp/luajit-update
 
-build luajit-prefix/src/luajit-stamp/luajit-update | ${cmake_ninja_workdir}luajit-prefix/src/luajit-stamp/luajit-update: CUSTOM_COMMAND luajit-prefix/tmp/luajit-gitupdate.cmake luajit-prefix/src/luajit-stamp/luajit-update-info.txt luajit-prefix/src/luajit-stamp/luajit-download
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/tmp/luajit-gitupdate.cmake
+build vendor/luajit/src/luajit-stamp/luajit-update | ${cmake_ninja_workdir}vendor/luajit/src/luajit-stamp/luajit-update: CUSTOM_COMMAND vendor/luajit/tmp/luajit-gitupdate.cmake vendor/luajit/src/luajit-stamp/luajit-update-info.txt vendor/luajit/src/luajit-stamp/luajit-download
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/vendor/luajit && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/tmp/luajit-gitupdate.cmake
   DESC = Performing update step for 'luajit'
 
 
@@ -410,71 +347,71 @@ build CMakeFiles/uv | ${cmake_ninja_workdir}CMakeFiles/uv: phony CMakeFiles/uv-c
 #############################################
 # Custom command for CMakeFiles/uv-complete
 
-build CMakeFiles/uv-complete uv-prefix/src/uv-stamp/uv-done | ${cmake_ninja_workdir}CMakeFiles/uv-complete ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-done: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-install uv-prefix/src/uv-stamp/uv-mkdir uv-prefix/src/uv-stamp/uv-download uv-prefix/src/uv-stamp/uv-update uv-prefix/src/uv-stamp/uv-patch uv-prefix/src/uv-stamp/uv-configure uv-prefix/src/uv-stamp/uv-build uv-prefix/src/uv-stamp/uv-install
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-done
+build CMakeFiles/uv-complete vendor/uv/src/uv-stamp/uv-done | ${cmake_ninja_workdir}CMakeFiles/uv-complete ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-done: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-install vendor/uv/src/uv-stamp/uv-mkdir vendor/uv/src/uv-stamp/uv-download vendor/uv/src/uv-stamp/uv-update vendor/uv/src/uv-stamp/uv-patch vendor/uv/src/uv-stamp/uv-configure vendor/uv/src/uv-stamp/uv-build vendor/uv/src/uv-stamp/uv-install
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-done
   DESC = Completed 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-build
+# Custom command for vendor/uv/src/uv-stamp/uv-build
 
-build uv-prefix/src/uv-stamp/uv-build /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-build: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-configure
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-build
+build vendor/uv/src/uv-stamp/uv-build /Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-build: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-configure
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-build
   DESC = Performing build step for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-configure
+# Custom command for vendor/uv/src/uv-stamp/uv-configure
 
-build uv-prefix/src/uv-stamp/uv-configure | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-configure: CUSTOM_COMMAND uv-prefix/tmp/uv-cfgcmd.txt uv-prefix/src/uv-stamp/uv-patch
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/uv -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_TESTING=OFF -DLIBUV_BUILD_SHARED=OFF -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/uv -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-configure
+build vendor/uv/src/uv-stamp/uv-configure | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-configure: CUSTOM_COMMAND vendor/uv/tmp/uv-cfgcmd.txt vendor/uv/src/uv-stamp/uv-patch
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/uv -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_TESTING=OFF -DLIBUV_BUILD_SHARED=OFF -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/uv -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-configure
   DESC = Performing configure step for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-download
+# Custom command for vendor/uv/src/uv-stamp/uv-download
 
-build uv-prefix/src/uv-stamp/uv-download | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-download: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-source_dirinfo.txt uv-prefix/src/uv-stamp/uv-mkdir
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-download
+build vendor/uv/src/uv-stamp/uv-download | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-download: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-source_dirinfo.txt vendor/uv/src/uv-stamp/uv-mkdir
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-download
   DESC = No download step for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-install
+# Custom command for vendor/uv/src/uv-stamp/uv-install
 
-build uv-prefix/src/uv-stamp/uv-install | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-install: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-build
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-install
+build vendor/uv/src/uv-stamp/uv-install | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-install: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-build
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-install
   DESC = Performing install step for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-mkdir
+# Custom command for vendor/uv/src/uv-stamp/uv-mkdir
 
-build uv-prefix/src/uv-stamp/uv-mkdir | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-mkdir: CUSTOM_COMMAND
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/tmp/uv-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-mkdir
+build vendor/uv/src/uv-stamp/uv-mkdir | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-mkdir: CUSTOM_COMMAND
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/tmp/uv-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-mkdir
   DESC = Creating directories for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-patch
+# Custom command for vendor/uv/src/uv-stamp/uv-patch
 
-build uv-prefix/src/uv-stamp/uv-patch | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-patch: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-patch-info.txt uv-prefix/src/uv-stamp/uv-update
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-patch
+build vendor/uv/src/uv-stamp/uv-patch | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-patch: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-patch-info.txt vendor/uv/src/uv-stamp/uv-update
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-patch
   DESC = No patch step for 'uv'
   restat = 1
 
 
 #############################################
-# Custom command for uv-prefix/src/uv-stamp/uv-update
+# Custom command for vendor/uv/src/uv-stamp/uv-update
 
-build uv-prefix/src/uv-stamp/uv-update | ${cmake_ninja_workdir}uv-prefix/src/uv-stamp/uv-update: CUSTOM_COMMAND uv-prefix/src/uv-stamp/uv-update-info.txt uv-prefix/src/uv-stamp/uv-download
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-update
+build vendor/uv/src/uv-stamp/uv-update | ${cmake_ninja_workdir}vendor/uv/src/uv-stamp/uv-update: CUSTOM_COMMAND vendor/uv/src/uv-stamp/uv-update-info.txt vendor/uv/src/uv-stamp/uv-download
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-update
   DESC = No update step for 'uv'
   restat = 1
 
@@ -488,71 +425,71 @@ build CMakeFiles/enet | ${cmake_ninja_workdir}CMakeFiles/enet: phony CMakeFiles/
 #############################################
 # Custom command for CMakeFiles/enet-complete
 
-build CMakeFiles/enet-complete enet-prefix/src/enet-stamp/enet-done | ${cmake_ninja_workdir}CMakeFiles/enet-complete ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-done: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-install enet-prefix/src/enet-stamp/enet-mkdir enet-prefix/src/enet-stamp/enet-download enet-prefix/src/enet-stamp/enet-update enet-prefix/src/enet-stamp/enet-patch enet-prefix/src/enet-stamp/enet-configure enet-prefix/src/enet-stamp/enet-build enet-prefix/src/enet-stamp/enet-install
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-done
+build CMakeFiles/enet-complete vendor/enet/src/enet-stamp/enet-done | ${cmake_ninja_workdir}CMakeFiles/enet-complete ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-done: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-install vendor/enet/src/enet-stamp/enet-mkdir vendor/enet/src/enet-stamp/enet-download vendor/enet/src/enet-stamp/enet-update vendor/enet/src/enet-stamp/enet-patch vendor/enet/src/enet-stamp/enet-configure vendor/enet/src/enet-stamp/enet-build vendor/enet/src/enet-stamp/enet-install
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-done
   DESC = Completed 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-build
+# Custom command for vendor/enet/src/enet-stamp/enet-build
 
-build enet-prefix/src/enet-stamp/enet-build /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-build: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-configure
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-build
+build vendor/enet/src/enet-stamp/enet-build /Users/82805/CLionProjects/polyblox/vendor/enet/lib/libenet.a | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-build: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-configure
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-build
   DESC = Performing build step for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-configure
+# Custom command for vendor/enet/src/enet-stamp/enet-configure
 
-build enet-prefix/src/enet-stamp/enet-configure | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-configure: CUSTOM_COMMAND enet-prefix/tmp/enet-cfgcmd.txt enet-prefix/src/enet-stamp/enet-patch
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/enet -DCMAKE_POSITION_INDEPENDENT_CODE=ON -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/enet -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-configure
+build vendor/enet/src/enet-stamp/enet-configure | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-configure: CUSTOM_COMMAND vendor/enet/tmp/enet-cfgcmd.txt vendor/enet/src/enet-stamp/enet-patch
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/enet -DCMAKE_POSITION_INDEPENDENT_CODE=ON -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/enet -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-configure
   DESC = Performing configure step for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-download
+# Custom command for vendor/enet/src/enet-stamp/enet-download
 
-build enet-prefix/src/enet-stamp/enet-download | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-download: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-source_dirinfo.txt enet-prefix/src/enet-stamp/enet-mkdir
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-download
+build vendor/enet/src/enet-stamp/enet-download | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-download: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-source_dirinfo.txt vendor/enet/src/enet-stamp/enet-mkdir
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-download
   DESC = No download step for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-install
+# Custom command for vendor/enet/src/enet-stamp/enet-install
 
-build enet-prefix/src/enet-stamp/enet-install | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-install: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-build
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-install
+build vendor/enet/src/enet-stamp/enet-install | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-install: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-build
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-install
   DESC = Performing install step for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-mkdir
+# Custom command for vendor/enet/src/enet-stamp/enet-mkdir
 
-build enet-prefix/src/enet-stamp/enet-mkdir | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-mkdir: CUSTOM_COMMAND
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/tmp/enet-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-mkdir
+build vendor/enet/src/enet-stamp/enet-mkdir | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-mkdir: CUSTOM_COMMAND
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/tmp/enet-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-mkdir
   DESC = Creating directories for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-patch
+# Custom command for vendor/enet/src/enet-stamp/enet-patch
 
-build enet-prefix/src/enet-stamp/enet-patch | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-patch: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-patch-info.txt enet-prefix/src/enet-stamp/enet-update
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-patch
+build vendor/enet/src/enet-stamp/enet-patch | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-patch: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-patch-info.txt vendor/enet/src/enet-stamp/enet-update
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-patch
   DESC = No patch step for 'enet'
   restat = 1
 
 
 #############################################
-# Custom command for enet-prefix/src/enet-stamp/enet-update
+# Custom command for vendor/enet/src/enet-stamp/enet-update
 
-build enet-prefix/src/enet-stamp/enet-update | ${cmake_ninja_workdir}enet-prefix/src/enet-stamp/enet-update: CUSTOM_COMMAND enet-prefix/src/enet-stamp/enet-update-info.txt enet-prefix/src/enet-stamp/enet-download
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-update
+build vendor/enet/src/enet-stamp/enet-update | ${cmake_ninja_workdir}vendor/enet/src/enet-stamp/enet-update: CUSTOM_COMMAND vendor/enet/src/enet-stamp/enet-update-info.txt vendor/enet/src/enet-stamp/enet-download
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-update
   DESC = No update step for 'enet'
   restat = 1
 
@@ -566,71 +503,71 @@ build CMakeFiles/lws | ${cmake_ninja_workdir}CMakeFiles/lws: phony CMakeFiles/lw
 #############################################
 # Custom command for CMakeFiles/lws-complete
 
-build CMakeFiles/lws-complete lws-prefix/src/lws-stamp/lws-done | ${cmake_ninja_workdir}CMakeFiles/lws-complete ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-done: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-install lws-prefix/src/lws-stamp/lws-mkdir lws-prefix/src/lws-stamp/lws-download lws-prefix/src/lws-stamp/lws-update lws-prefix/src/lws-stamp/lws-patch lws-prefix/src/lws-stamp/lws-configure lws-prefix/src/lws-stamp/lws-build lws-prefix/src/lws-stamp/lws-install
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/lws-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-done
+build CMakeFiles/lws-complete vendor/lws/src/lws-stamp/lws-done | ${cmake_ninja_workdir}CMakeFiles/lws-complete ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-done: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-install vendor/lws/src/lws-stamp/lws-mkdir vendor/lws/src/lws-stamp/lws-download vendor/lws/src/lws-stamp/lws-update vendor/lws/src/lws-stamp/lws-patch vendor/lws/src/lws-stamp/lws-configure vendor/lws/src/lws-stamp/lws-build vendor/lws/src/lws-stamp/lws-install
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E make_directory /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/lws-complete && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-done
   DESC = Completed 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-build
+# Custom command for vendor/lws/src/lws-stamp/lws-build
 
-build lws-prefix/src/lws-stamp/lws-build /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-build: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-configure
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-build
+build vendor/lws/src/lws-stamp/lws-build /Users/82805/CLionProjects/polyblox/vendor/lws/lib/libwebsockets.a | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-build: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-configure
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-build
   DESC = Performing build step for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-configure
+# Custom command for vendor/lws/src/lws-stamp/lws-configure
 
-build lws-prefix/src/lws-stamp/lws-configure | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-configure: CUSTOM_COMMAND lws-prefix/tmp/lws-cfgcmd.txt lws-prefix/src/lws-stamp/lws-patch
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/lws -DLWS_WITH_SHARED=OFF -DLWS_WITH_SSL=OFF -DLWS_WITHOUT_TESTAPPS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/lws -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-configure
+build vendor/lws/src/lws-stamp/lws-configure | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-configure: CUSTOM_COMMAND vendor/lws/tmp/lws-cfgcmd.txt vendor/lws/src/lws-stamp/lws-patch
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/82805/CLionProjects/polyblox/vendor/lws -DLWS_WITH_SHARED=OFF -DLWS_WITH_SSL=OFF -DLWS_WITHOUT_TESTAPPS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -GNinja -S /Users/82805/CLionProjects/polyblox/vendor/lws -B /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-configure
   DESC = Performing configure step for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-download
+# Custom command for vendor/lws/src/lws-stamp/lws-download
 
-build lws-prefix/src/lws-stamp/lws-download | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-download: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-source_dirinfo.txt lws-prefix/src/lws-stamp/lws-mkdir
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-download
+build vendor/lws/src/lws-stamp/lws-download | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-download: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-source_dirinfo.txt vendor/lws/src/lws-stamp/lws-mkdir
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-download
   DESC = No download step for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-install
+# Custom command for vendor/lws/src/lws-stamp/lws-install
 
-build lws-prefix/src/lws-stamp/lws-install | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-install: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-build
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-install
+build vendor/lws/src/lws-stamp/lws-install | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-install: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-build
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-build && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --build . --target install && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-install
   DESC = Performing install step for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-mkdir
+# Custom command for vendor/lws/src/lws-stamp/lws-mkdir
 
-build lws-prefix/src/lws-stamp/lws-mkdir | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-mkdir: CUSTOM_COMMAND
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/tmp/lws-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-mkdir
+build vendor/lws/src/lws-stamp/lws-mkdir | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-mkdir: CUSTOM_COMMAND
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -Dcfgdir= -P /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/tmp/lws-mkdirs.cmake && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-mkdir
   DESC = Creating directories for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-patch
+# Custom command for vendor/lws/src/lws-stamp/lws-patch
 
-build lws-prefix/src/lws-stamp/lws-patch | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-patch: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-patch-info.txt lws-prefix/src/lws-stamp/lws-update
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-patch
+build vendor/lws/src/lws-stamp/lws-patch | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-patch: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-patch-info.txt vendor/lws/src/lws-stamp/lws-update
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-patch
   DESC = No patch step for 'lws'
   restat = 1
 
 
 #############################################
-# Custom command for lws-prefix/src/lws-stamp/lws-update
+# Custom command for vendor/lws/src/lws-stamp/lws-update
 
-build lws-prefix/src/lws-stamp/lws-update | ${cmake_ninja_workdir}lws-prefix/src/lws-stamp/lws-update: CUSTOM_COMMAND lws-prefix/src/lws-stamp/lws-update-info.txt lws-prefix/src/lws-stamp/lws-download
-  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-update
+build vendor/lws/src/lws-stamp/lws-update | ${cmake_ninja_workdir}vendor/lws/src/lws-stamp/lws-update: CUSTOM_COMMAND vendor/lws/src/lws-stamp/lws-update-info.txt vendor/lws/src/lws-stamp/lws-download
+  COMMAND = cd /Users/82805/CLionProjects/polyblox/cmake-build-debug && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo_append && /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E touch /Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-update
   DESC = No update step for 'lws'
   restat = 1
 
@@ -670,14 +607,14 @@ build /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/cmake.ver
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja /Users/82805/CLionProjects/polyblox/cmake-build-debug/cmake_install.cmake: RERUN_CMAKE /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/cmake.verify_globs | /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/GNU.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/PatchInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/RepositoryInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/UpdateInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/cfgcmd.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitclone.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitupdate.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/mkdirs.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/shared_internal_commands.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindGit.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageHandleStandardArgs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageMessage.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindVulkan.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin-Initialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /Users/82805/CLionProjects/polyblox/CMakeLists.txt /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/4.2.2/CMakeCCompiler.cmake CMakeFiles/4.2.2/CMakeCXXCompiler.cmake CMakeFiles/4.2.2/CMakeSystem.cmake enet-prefix/tmp/enet-mkdirs.cmake luajit-prefix/tmp/luajit-mkdirs.cmake lws-prefix/tmp/lws-mkdirs.cmake uv-prefix/tmp/uv-mkdirs.cmake
+build build.ninja /Users/82805/CLionProjects/polyblox/cmake-build-debug/cmake_install.cmake: RERUN_CMAKE /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/cmake.verify_globs | /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/GNU.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/PatchInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/RepositoryInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/UpdateInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/cfgcmd.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitclone.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitupdate.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/mkdirs.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/shared_internal_commands.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindGit.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageHandleStandardArgs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageMessage.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindVulkan.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin-Initialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /Users/82805/CLionProjects/polyblox/CMakeLists.txt /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/4.2.2/CMakeCCompiler.cmake CMakeFiles/4.2.2/CMakeCXXCompiler.cmake CMakeFiles/4.2.2/CMakeSystem.cmake vendor/enet/tmp/enet-mkdirs.cmake vendor/luajit/tmp/luajit-mkdirs.cmake vendor/lws/tmp/lws-mkdirs.cmake vendor/uv/tmp/uv-mkdirs.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/GNU.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/PatchInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/RepositoryInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/UpdateInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/cfgcmd.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitclone.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitupdate.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/mkdirs.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/shared_internal_commands.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindGit.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageHandleStandardArgs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageMessage.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindVulkan.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin-Initialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /Users/82805/CLionProjects/polyblox/CMakeLists.txt /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/4.2.2/CMakeCCompiler.cmake CMakeFiles/4.2.2/CMakeCXXCompiler.cmake CMakeFiles/4.2.2/CMakeSystem.cmake enet-prefix/tmp/enet-mkdirs.cmake luajit-prefix/tmp/luajit-mkdirs.cmake lws-prefix/tmp/lws-mkdirs.cmake uv-prefix/tmp/uv-mkdirs.cmake: phony
+build /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Compiler/GNU.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/PatchInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/RepositoryInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/UpdateInfo.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/cfgcmd.txt.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitclone.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/gitupdate.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/mkdirs.cmake.in /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/ExternalProject/shared_internal_commands.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindGit.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageHandleStandardArgs.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindPackageMessage.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/FindVulkan.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Linker/AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Apple-Clang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin-Initialize.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Darwin.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-C.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/Linker/Apple-AppleClang.cmake /Users/82805/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /Users/82805/CLionProjects/polyblox/CMakeLists.txt /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/4.2.2/CMakeCCompiler.cmake CMakeFiles/4.2.2/CMakeCXXCompiler.cmake CMakeFiles/4.2.2/CMakeSystem.cmake vendor/enet/tmp/enet-mkdirs.cmake vendor/luajit/tmp/luajit-mkdirs.cmake vendor/lws/tmp/lws-mkdirs.cmake vendor/uv/tmp/uv-mkdirs.cmake: phony
 
 
 #############################################

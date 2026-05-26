@@ -4,10 +4,10 @@
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet.rule
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet-complete.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-build.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-configure.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-download.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-install.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-mkdir.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-patch.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-update.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-build.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-configure.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-download.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-install.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-mkdir.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-patch.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-update.rule

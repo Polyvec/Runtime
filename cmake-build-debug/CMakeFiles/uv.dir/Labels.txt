@@ -4,10 +4,10 @@
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv.rule
 /Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv-complete.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-build.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-configure.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-download.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-install.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-mkdir.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-patch.rule
-/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-update.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-build.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-configure.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-download.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-install.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-mkdir.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-patch.rule
+/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-update.rule

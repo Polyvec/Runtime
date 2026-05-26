@@ -11,25 +11,25 @@
 			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/enet-complete.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-build.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-build.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-configure.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-configure.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-download.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-download.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-install.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-install.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-mkdir.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-mkdir.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-patch.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-patch.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/enet-prefix/src/enet-stamp/enet-update.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/enet/src/enet-stamp/enet-update.rule"
 		}
 	],
 	"target" : 

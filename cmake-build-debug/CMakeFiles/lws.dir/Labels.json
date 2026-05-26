@@ -11,25 +11,25 @@
 			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/lws-complete.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-build.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-build.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-configure.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-configure.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-download.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-download.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-install.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-install.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-mkdir.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-mkdir.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-patch.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-patch.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/lws-prefix/src/lws-stamp/lws-update.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/lws/src/lws-stamp/lws-update.rule"
 		}
 	],
 	"target" : 

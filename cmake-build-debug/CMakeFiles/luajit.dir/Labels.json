@@ -11,25 +11,25 @@
 			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/luajit-complete.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-build.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-build.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-configure.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-configure.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-download.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-download.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-install.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-install.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-mkdir.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-mkdir.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-patch.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-patch.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/luajit-prefix/src/luajit-stamp/luajit-update.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/luajit/src/luajit-stamp/luajit-update.rule"
 		}
 	],
 	"target" : 

@@ -1,11 +1,11 @@
 #include "../../../include/vm/api/math.hpp"
-#include "../../../include/math/vector2.hpp"
-#include "../../../include/math/vector3.hpp"
-#include "../../../include/math/vector4.hpp"
-#include "../../../include/math/quaternion.hpp"
-#include "../../../include/math/matrix3.hpp"
-#include "../../../include/math/matrix4.hpp"
-#include "../../../include/math/transform.hpp"
+#include "../include/core/math/vector2.hpp"
+#include "../include/core/math/vector3.hpp"
+#include "../include/core/math/vector4.hpp"
+#include "../include/core/math/quaternion.hpp"
+#include "../include/core/math/matrix3.hpp"
+#include "../include/core/math/matrix4.hpp"
+#include "../include/core/math/transform.hpp"
 #include <sol/sol.hpp>
 #include <string>
 

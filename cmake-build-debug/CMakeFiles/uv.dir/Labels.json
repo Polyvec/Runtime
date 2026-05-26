@@ -11,25 +11,25 @@
 			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/CMakeFiles/uv-complete.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-build.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-build.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-configure.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-configure.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-download.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-download.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-install.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-install.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-mkdir.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-mkdir.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-patch.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-patch.rule"
 		},
 		{
-			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/uv-prefix/src/uv-stamp/uv-update.rule"
+			"file" : "/Users/82805/CLionProjects/polyblox/cmake-build-debug/vendor/uv/src/uv-stamp/uv-update.rule"
 		}
 	],
 	"target" : 

@@ -1,6 +1,0 @@
-/Users/82805/CLionProjects/polyblox/vendor/uv/share/doc/libuv/LICENSE
-/Users/82805/CLionProjects/polyblox/vendor/uv/share/doc/libuv/LICENSE-extra
-/Users/82805/CLionProjects/polyblox/vendor/uv/lib/pkgconfig/libuv-static.pc
-/Users/82805/CLionProjects/polyblox/vendor/uv/lib/libuv.a
-/Users/82805/CLionProjects/polyblox/vendor/uv/lib/cmake/libuv/libuvConfig.cmake
-/Users/82805/CLionProjects/polyblox/vendor/uv/lib/cmake/libuv/libuvConfig-noconfig.cmake
