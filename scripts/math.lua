@@ -1,4 +1,4 @@
-local velocity = math.vector2.new(10.5, 20.5)
+ local velocity = math.vector2.new(10.5, 20.5)
 local acceleration = math.vector2.new(2.0, 4.0)
 local force = velocity + acceleration
 local impulse = force * 3.0

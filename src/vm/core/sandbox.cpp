@@ -11,8 +11,8 @@ extern "C" {
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
-void register_ecs_bindings(lua_State* state);
-void register_math_bindings(lua_State* state);
+void ecs(lua_State* state);
+void types(lua_State* state);
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -67,8 +67,8 @@ Sandbox::Sandbox() {
 
         view.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table, sol::lib::string, sol::lib::math);
 
-        register_ecs_bindings(state);
-        register_math_bindings(state);
+        ecs(state);
+        types(state);
     }
     catch (const std::exception& error) {
         std::fprintf(stderr, "sandbox initialization error: %s\n", error.what());

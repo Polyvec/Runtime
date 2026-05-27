@@ -1,4 +1,4 @@
-local world = ecs.world.new()
+local world = world.new()
 
 local cmd = math.matrix4.identity()
 local layout = math.matrix4.identity()

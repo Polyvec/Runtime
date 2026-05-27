@@ -2,4 +2,4 @@
 
 struct lua_State;
 
-void register_ecs_bindings(lua_State* state);
+void ecs(lua_State* state);

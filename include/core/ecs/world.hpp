@@ -29,6 +29,9 @@ namespace voxyl::ecs {
         [[nodiscard]] bool has(Entity entity, std::uint32_t target) const;
         void detach(Entity entity, std::uint32_t target);
 
+        void store(std::uint32_t component, const void* data, std::size_t size);
+        void* fetch(std::uint32_t component);
+
         void batch(const std::function<void()>& flow);
         [[nodiscard]] Query query() const;
         void execute(const Query& query, const Query::Callback& callback) const;
@@ -42,9 +45,10 @@ namespace voxyl::ecs {
         std::vector<Entity> pool;
         std::vector<std::size_t> sizes;
         std::unordered_map<std::string, std::uint32_t> registry;
-        std::vector<std::function<void()>> queue;
-        Entity cursor = 0;
+        std::unordered_map<std::uint32_t, std::vector<std::uint8_t>> resources;
+        std::uint32_t cursor = 0;
         bool deferred = false;
+        std::vector<std::function<void()>> queue;
     };
 
 }

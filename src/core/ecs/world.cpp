@@ -4,8 +4,7 @@
 namespace voxyl::ecs {
 
     std::uint32_t World::component(const std::string& name, const std::size_t size) {
-        auto item = registry.find(name);
-        if (item != registry.end()) {
+        if (auto item = registry.find(name); item != registry.end()) {
             return item->second;
         }
         sizes.push_back(size);
@@ -22,12 +21,10 @@ namespace voxyl::ecs {
         } else {
             entity = cursor++;
         }
-
         if (entity >= records.size()) {
             records.resize(entity + 1);
         }
-
-        constexpr Mask mask;
+        Mask mask;
         migrate(entity, mask);
         return entity;
     }
@@ -39,7 +36,6 @@ namespace voxyl::ecs {
             });
             return;
         }
-
         auto [archetype, index] = records[entity];
         if (archetype) {
             const Entity swapped = archetype->remove(index);
@@ -51,72 +47,107 @@ namespace voxyl::ecs {
         pool.push_back(entity);
     }
 
-    void* World::attach(const Entity entity, const std::uint32_t target, const void* data) {
+    void* World::attach(Entity entity, std::uint32_t target, const void* data) {
         if (deferred) {
-            std::vector<std::uint8_t> bytes;
-            if (data) {
-                bytes.resize(sizes[target]);
-                std::memcpy(bytes.data(), data, sizes[target]);
-            }
-            queue.emplace_back([this, entity, target, bytes = std::move(bytes)]() {
-                this->attach(entity, target, bytes.empty() ? nullptr : bytes.data());
+            queue.emplace_back([this, entity, target, data]() {
+                this->attach(entity, target, data);
             });
             return nullptr;
         }
-
-        Mask mask = records[entity].archetype ? records[entity].archetype->mask : Mask();
-        mask.set(target);
-        migrate(entity, mask);
-
         auto [archetype, index] = records[entity];
-        const std::size_t column = archetype->mapping[target];
-        void* memory = &archetype->storage[column][index * sizes[target]];
-
-        if (data) {
-            std::memcpy(memory, data, sizes[target]);
+        Archetype* destination = nullptr;
+        if (archetype) {
+            auto item = archetype->grow.find(target);
+            if (item != archetype->grow.end()) {
+                destination = item->second;
+            }
         }
-
-        return memory;
+        if (!destination) {
+            Mask mask = archetype ? archetype->mask : Mask();
+            mask.set(target);
+            destination = locate(mask);
+            if (archetype) {
+                archetype->grow[target] = destination;
+                destination->shrink[target] = archetype;
+            }
+        }
+        migrate(entity, destination->mask);
+        if (sizes[target] > 0) {
+            void* pointer = get(entity, target);
+            if (data && pointer) {
+                std::memcpy(pointer, data, sizes[target]);
+            }
+            return pointer;
+        }
+        return nullptr;
     }
 
-    void* World::get(const Entity entity, const std::uint32_t target) {
+    void* World::get(Entity entity, std::uint32_t target) {
         auto [archetype, index] = records[entity];
-        if (!archetype || !archetype->mask.test(target)) {
+        if (!archetype) {
             return nullptr;
         }
-        const std::size_t column = archetype->mapping[target];
-        return &archetype->storage[column][index * sizes[target]];
+        auto item = archetype->mapping.find(target);
+        if (item == archetype->mapping.end()) {
+            return nullptr;
+        }
+        return &archetype->storage[item->second][index * sizes[target]];
     }
 
-    bool World::has(const Entity entity, const std::uint32_t target) const {
-        if (entity >= records.size()) return false;
+    bool World::has(Entity entity, std::uint32_t target) const {
         auto [archetype, index] = records[entity];
-        return archetype && archetype->mask.test(target);
+        if (!archetype) {
+            return false;
+        }
+        return archetype->mask.test(target);
     }
 
-    void World::detach(const Entity entity, const std::uint32_t target) {
+    void World::detach(Entity entity, std::uint32_t target) {
         if (deferred) {
             queue.emplace_back([this, entity, target]() {
                 this->detach(entity, target);
             });
             return;
         }
-
         auto [archetype, index] = records[entity];
-        if (!archetype || !archetype->mask.test(target)) return;
+        if (!archetype) {
+            return;
+        }
+        Archetype* destination = nullptr;
+        auto item = archetype->shrink.find(target);
+        if (item != archetype->shrink.end()) {
+            destination = item->second;
+        }
+        if (!destination) {
+            Mask mask = archetype->mask;
+            mask.reset(target);
+            destination = locate(mask);
+            archetype->shrink[target] = destination;
+            destination->grow[target] = archetype;
+        }
+        migrate(entity, destination->mask);
+    }
 
-        Mask mask = archetype->mask;
-        mask.reset(target);
-        migrate(entity, mask);
+    void World::store(std::uint32_t component, const void* data, std::size_t size) {
+        auto& block = resources[component];
+        block.resize(size);
+        std::memcpy(block.data(), data, size);
+    }
+
+    void* World::fetch(std::uint32_t component) {
+        auto item = resources.find(component);
+        if (item == resources.end()) {
+            return nullptr;
+        }
+        return item->second.data();
     }
 
     void World::batch(const std::function<void()>& flow) {
         deferred = true;
         flow();
         deferred = false;
-
-        for (const auto& operation : queue) {
-            operation();
+        for (const auto& action : queue) {
+            action();
         }
         queue.clear();
     }
@@ -130,21 +161,21 @@ namespace voxyl::ecs {
     }
 
     Archetype* World::locate(const Mask& mask) {
-        for (const auto& archetype : archetypes) {
+        for (auto& archetype : archetypes) {
             if (archetype->mask == mask) {
                 return archetype.get();
             }
         }
-
         auto archetype = std::make_unique<Archetype>();
         archetype->mask = mask;
-
-        for (std::size_t index = 0; index < sizes.size(); ++index) {
+        for (std::uint32_t index = 0; index < MAX_COMPONENTS; ++index) {
             if (mask.test(index)) {
-                archetype->mapping[index] = archetype->storage.size();
-                archetype->storage.emplace_back();
-                archetype->sizes.push_back(sizes[index]);
-                archetype->buffers.emplace_back(static_cast<VkBuffer>(VK_NULL_HANDLE));
+                if (sizes[index] > 0) {
+                    archetype->mapping[index] = archetype->storage.size();
+                    archetype->storage.emplace_back();
+                    archetype->sizes.push_back(sizes[index]);
+                    archetype->buffers.emplace_back(static_cast<VkBuffer>(VK_NULL_HANDLE));
+                }
             }
         }
         archetypes.push_back(std::move(archetype));
@@ -154,14 +185,11 @@ namespace voxyl::ecs {
     void World::migrate(const Entity entity, const Mask& mask) {
         auto [archetype, index] = records[entity];
         Archetype* destination = locate(mask);
-
         if (archetype == destination) {
             return;
         }
-
         destination->add(entity);
         const std::size_t slot = destination->entities.size() - 1;
-
         if (archetype) {
             {
                 std::shared_lock lock(archetype->mutex);
@@ -176,13 +204,11 @@ namespace voxyl::ecs {
                     }
                 }
             }
-
             const Entity swapped = archetype->remove(index);
             if (swapped != NONE) {
                 records[swapped].index = index;
             }
         }
-
         records[entity] = {destination, slot};
     }
 

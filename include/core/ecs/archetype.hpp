@@ -17,11 +17,12 @@ namespace voxyl::ecs {
         std::vector<VkBuffer> buffers;
         std::vector<std::size_t> sizes;
         std::unordered_map<std::uint32_t, std::size_t> mapping;
+        std::unordered_map<std::uint32_t, Archetype*> grow;
+        std::unordered_map<std::uint32_t, Archetype*> shrink;
         std::atomic<std::uint32_t> version{0};
         mutable std::shared_mutex mutex;
 
         void add(Entity entity);
-
         std::uint32_t remove(std::size_t index);
     };
 
