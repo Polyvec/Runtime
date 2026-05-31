@@ -4,7 +4,7 @@
 #include <numbers>
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     struct Scalar {
         float value;

@@ -3,7 +3,7 @@
 #include "vector2.hpp"
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     class Vector3 {
     public:

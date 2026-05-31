@@ -1,6 +1,6 @@
 #include "../include/vm/api/ecs.hpp"
-#include "../include/core/ecs/world.hpp"
-#include "../include/core/ecs/query.hpp"
+#include "../include/core/ecs/zone.hpp"
+#include "../include/core/ecs/find.hpp"
 #include "../include/core/types/vector2.hpp"
 #include "../include/core/types/vector3.hpp"
 #include "../include/core/types/vector4.hpp"
@@ -15,8 +15,8 @@
 #include <string>
 #include <memory>
 
-using namespace voxyl::ecs;
-using namespace voxyl::math;
+using namespace core;
+using namespace core::math;
 
 namespace {
     struct detail {
@@ -43,31 +43,31 @@ namespace {
         }
     };
 
-    struct query {
-        Query base;
+    struct find {
+        Find base;
 
-        query& with(uint32_t type) {
+        find& with(uint32_t type) {
             base.with(type);
             return *this;
         }
 
-        query& without(uint32_t type) {
-            base.without(type);
+        find& without(uint32_t type) {
+            base.skip(type);
             return *this;
         }
 
-        query& any(sol::table table) {
+        find& any(sol::table table) {
             std::vector<uint32_t> types;
             table.for_each([&](sol::object key, sol::object value) {
                 (void)key;
                 types.push_back(value.as<uint32_t>());
             });
-            base.any(types);
+            base.some(types);
             return *this;
         }
 
         bool has(uint32_t type) const {
-            return base.has(type);
+            return base.test(type);
         }
     };
 }
@@ -85,17 +85,17 @@ void ecs(lua_State* state) {
         "set", &column::set
     );
 
-    hidden.new_usertype<query>("query",
+    hidden.new_usertype<find>("query",
         sol::no_constructor,
-        "with", &query::with,
-        "without", &query::without,
-        "any", &query::any,
-        "has", &query::has
+        "with", &find::with,
+        "without", &find::without,
+        "any", &find::any,
+        "has", &find::has
     );
 
-    hidden.new_usertype<World>("World",
+    hidden.new_usertype<Zone>("World",
         sol::no_constructor,
-        "component", [store](sol::this_state state, World& instance, const std::string& name, sol::object value) {
+        "component", [store](sol::this_state state, Zone& instance, const std::string& name, sol::object value) {
             (void)state;
             detail item;
             item.object = false;
@@ -150,40 +150,40 @@ void ecs(lua_State* state) {
                 item.reader = [](void* pointer, sol::this_state context) { (void)pointer; (void)context; return sol::object(sol::lua_nil); };
                 item.writer = [](void* pointer, sol::object object) { (void)pointer; (void)object; };
             }
-            uint32_t type = instance.component(name, item.size);
+            uint32_t type = instance.type(name, item.size);
             (*store)[type] = item;
             return type;
         },
-        "spawn", &World::spawn,
-        "kill", &World::kill,
-        "has", &World::has,
-        "detach", &World::detach,
-        "query", [](World& instance) { return query{ instance.query() }; },
-        "batch", [](World& instance, sol::function action) {
-            instance.batch([action]() { (void)action(); });
+        "spawn", &Zone::make,
+        "kill", &Zone::kill,
+        "has", &Zone::test,
+        "detach", &Zone::drop,
+        "query", [](Zone& instance) { return find{ instance.seek() }; },
+        "batch", [](Zone& instance, sol::function action) {
+            instance.bulk([action]() { (void)action(); });
         },
-        "attach", [store](World& instance, Entity entity, uint32_t type, sol::object value) {
+        "attach", [store](Zone& instance, Id entity, uint32_t type, sol::object value) {
             auto match = store->find(type);
             if (match == store->end()) return;
             const auto& item = match->second;
             if (item.size == 0) {
-                instance.attach(entity, type, nullptr);
+                instance.fill(entity, type, nullptr);
                 return;
             }
             std::vector<char> memory(item.size, 0);
             item.writer(memory.data(), value);
-            instance.attach(entity, type, memory.data());
+            instance.fill(entity, type, memory.data());
         },
-        "get", [store](sol::this_state state, World& instance, Entity entity, uint32_t type) -> sol::object {
-            void* pointer = instance.get(entity, type);
+        "get", [store](sol::this_state state, Zone& instance, Id entity, uint32_t type) -> sol::object {
+            void* pointer = instance.peek(entity, type);
             if (!pointer) return sol::lua_nil;
             auto match = store->find(type);
             if (match == store->end()) return sol::lua_nil;
             return match->second.reader(pointer, state);
         },
-        "execute", [store](sol::this_state state, World& instance, const query& search, sol::function callback) {
+        "execute", [store](sol::this_state state, Zone& instance, const find& search, sol::function callback) {
             if (!callback.valid()) return;
-            instance.execute(search.base, [state, callback, store, order = search.base.tracked()](std::size_t count, const Entity* entities, const std::vector<void*>& blocks) {
+            instance.loop(search.base, [state, callback, store, order = search.base.plan()](std::size_t count, const Id* entities, const std::vector<void*>& blocks) {
                 (void)entities;
                 std::vector<sol::object> arguments;
                 arguments.reserve(blocks.size() + 1);
@@ -206,6 +206,6 @@ void ecs(lua_State* state) {
     );
 
     world["new"] = []() {
-        return World();
+        return std::make_unique<Zone>();
     };
 }

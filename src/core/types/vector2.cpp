@@ -1,7 +1,7 @@
 #include "../include/core/types/vector2.hpp"
 #include <cassert>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Vector2 Vector2::ZERO = {0.0f, 0.0f};
     const Vector2 Vector2::ONE = {1.0f, 1.0f};

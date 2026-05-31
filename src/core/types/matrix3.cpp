@@ -2,7 +2,7 @@
 #include <cassert>
 #include <numbers>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Matrix3 Matrix3::IDENTITY = Matrix3(1.0f);
 

@@ -2,7 +2,7 @@
 
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     class Vector2 {
     public:

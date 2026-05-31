@@ -1,7 +1,7 @@
 #include "../include/core/types/matrix4.hpp"
 #include <cassert>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Matrix4 Matrix4::IDENTITY = Matrix4(1.0f);
 

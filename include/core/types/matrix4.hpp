@@ -4,7 +4,7 @@
 #include "vector4.hpp"
 #include "quaternion.hpp"
 
-namespace voxyl::math {
+namespace core::math {
 
     class alignas(16) Matrix4 {
         public:

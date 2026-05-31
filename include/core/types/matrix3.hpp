@@ -5,7 +5,7 @@
 #include <limits>
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     struct Matrix3 {
         float matrix[3][3]{};

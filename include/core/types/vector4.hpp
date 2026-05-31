@@ -3,7 +3,7 @@
 #include "vector3.hpp"
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     class alignas(16) Vector4 {
         public:

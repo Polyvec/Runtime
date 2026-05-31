@@ -9,7 +9,7 @@
 #include <sol/sol.hpp>
 #include <string>
 
-using namespace voxyl::math;
+using namespace core::math;
 
 void types(lua_State* state) {
 
@@ -153,7 +153,7 @@ void types(lua_State* state) {
         "translation", &Matrix3::translation,
         "rotation", [](const Matrix3& matrix) { return static_cast<float>(matrix.rotation()); },
         "scale", static_cast<Vector2 (Matrix3::*)() const>(&Matrix3::scale),
-        "identity", []() { return Matrix3::IDENTITY; },
+        "identity", [] { return Matrix3::IDENTITY; },
         "translate", &Matrix3::translate,
         "rotate", &Matrix3::rotate,
         "factor", static_cast<Matrix3 (*)(const Vector2&)>(&Matrix3::scale),
@@ -177,7 +177,7 @@ void types(lua_State* state) {
         "transposed", &Matrix4::transposed,
         "inverted", &Matrix4::inverted,
         "decompose", &Matrix4::decompose,
-        "identity", []() { return Matrix4::IDENTITY; },
+        "identity", [] { return Matrix4::IDENTITY; },
         "translate", &Matrix4::translate,
         "rotate", &Matrix4::rotate,
         "scale", &Matrix4::scale,

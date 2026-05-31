@@ -6,7 +6,7 @@
 #include <limits>
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     struct Transform {
         Vector3 translation;

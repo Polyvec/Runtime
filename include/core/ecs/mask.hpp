@@ -2,9 +2,9 @@
 #include <bitset>
 #include <cstddef>
 
-namespace voxyl::ecs {
+namespace core {
 
-    constexpr std::size_t MAX_COMPONENTS = 256;
-    using Mask = std::bitset<MAX_COMPONENTS>;
+    constexpr std::size_t Cap = 256;
+    using Mask = std::bitset<Cap>;
 
 }

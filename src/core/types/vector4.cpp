@@ -1,7 +1,7 @@
 #include "../include/core/types/vector4.hpp"
 #include <cassert>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Vector4 Vector4::ZERO = {0.0f, 0.0f, 0.0f, 0.0f};
     const Vector4 Vector4::ONE = {1.0f, 1.0f, 1.0f, 1.0f};

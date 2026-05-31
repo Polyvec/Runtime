@@ -2,7 +2,7 @@
 #include <cassert>
 #include <numbers>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Quaternion Quaternion::IDENTITY = {0.0f, 0.0f, 0.0f, 1.0f};
 

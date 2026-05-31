@@ -5,7 +5,7 @@
 #include <limits>
 #include <ostream>
 
-namespace voxyl::math {
+namespace core::math {
 
     struct Quaternion {
         float x, y, z, w;

@@ -1,7 +1,7 @@
 #include "../include/core/types/transform.hpp"
 #include <cassert>
 
-namespace voxyl::math {
+namespace core::math {
 
     const Transform Transform::IDENTITY = {
         {0.0f, 0.0f, 0.0f},
